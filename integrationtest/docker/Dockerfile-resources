@@ -1,0 +1,9 @@
+FROM bash:latest
+
+# Jacoco agent jar file.
+VOLUME /jacoco-report
+
+# Loop script to avoid termination of container.
+ADD ./loop.sh /loop.sh
+
+CMD [ "/loop.sh" ]
