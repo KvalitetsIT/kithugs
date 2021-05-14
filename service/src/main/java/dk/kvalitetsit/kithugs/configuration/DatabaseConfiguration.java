@@ -14,7 +14,7 @@ import javax.sql.DataSource;
 @EnableTransactionManagement
 public class DatabaseConfiguration {
     @Bean
-    public HelloDao smsStatusDao(DataSource dataSource) {
+    public HelloDao helloDao(DataSource dataSource) {
         return new HelloDaoImpl(dataSource);
     }
 

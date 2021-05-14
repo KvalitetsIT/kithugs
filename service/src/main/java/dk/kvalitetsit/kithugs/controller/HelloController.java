@@ -1,8 +1,10 @@
 package dk.kvalitetsit.kithugs.controller;
 
 import dk.kvalitetsit.kithugs.api.HelloRequest;
+import dk.kvalitetsit.kithugs.controller.exception.BadRequestException;
 import dk.kvalitetsit.kithugs.service.HelloService;
 import dk.kvalitetsit.kithugs.api.HelloResponse;
+import dk.kvalitetsit.kithugs.service.model.HelloServiceInput;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,10 +22,22 @@ public class HelloController {
     }
 
     @PostMapping(value = "/v1/hello")
-    public @ResponseBody
-    HelloResponse sms(@RequestBody HelloRequest body) {
+    public @ResponseBody HelloResponse sms(@RequestBody(required = false) HelloRequest body) {
         logger.debug("Enter POST hello.");
 
-        return null;
+        if(body == null) {
+            throw new BadRequestException();
+        }
+
+        var serviceInput = new HelloServiceInput();
+        serviceInput.setName(body.getName());
+
+        var serviceResponse = helloService.helloServiceBusinessLogic(serviceInput);
+
+        var helloResponse = new HelloResponse();
+        helloResponse.setName(serviceResponse.getName());
+        helloResponse.setNow(serviceResponse.getNow());
+
+        return helloResponse;
     }
 }

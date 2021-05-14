@@ -33,7 +33,7 @@ public class HelloDaoImpl implements HelloDao {
 
     @Override
     public List<HelloEntity> findAll() {
-        var sql = "select * from HelloTable";
+        var sql = "select * from hello_table";
 
         NamedParameterJdbcTemplate template = new NamedParameterJdbcTemplate(dataSource);
         return template.query(sql, new BeanPropertyRowMapper<>(HelloEntity.class));

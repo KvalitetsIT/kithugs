@@ -8,7 +8,7 @@ import java.util.UUID;
 
 import static org.junit.Assert.*;
 
-public class SmsStatusDaoTest extends AbstractDaoTest {
+public class HelloDaoTest extends AbstractDaoTest {
     @Autowired
     private HelloDao helloDao;
 
