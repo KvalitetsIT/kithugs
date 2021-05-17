@@ -3,8 +3,8 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<artifactId>sms</artifactId>
-		<groupId>dk.medcom.sms</groupId>
+		<artifactId>kithugs</artifactId>
+		<groupId>dk.kvalitetsit.kithugs</groupId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<artifactId>documentation</artifactId>
@@ -76,7 +76,7 @@
 				<configuration>
 					<images>
 						<image>
-							<name>kvalitetsit/medcom-sms-documentation</name>
+							<name>kvalitetsit/kithugs-documentation</name>
 							<build>
 								<tags>
 									<tag>dev</tag>
@@ -88,7 +88,7 @@
 									<inline>
 										<files>
 											<file>
-												<source>${project.basedir}/src/main/resources/smsservice.yaml</source>
+												<source>${project.basedir}/src/main/resources/helloservice.yaml</source>
 												<destName>${git.branch}.yaml</destName>
 											</file>
 											<file>
@@ -125,7 +125,7 @@
 							<goal>generate</goal>
 						</goals>
 						<configuration>
-							<inputSpec>${project.basedir}/src/main/resources/smsservice.yaml</inputSpec>
+							<inputSpec>${project.basedir}/src/main/resources/helloservice.yaml</inputSpec>
 							<generatorName>java</generatorName>
 							<configOptions>
 								<sourceFolder>src/generated-sources/java/main</sourceFolder>

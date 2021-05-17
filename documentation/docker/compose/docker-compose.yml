@@ -4,11 +4,11 @@ services:
      image: mysql:5.7
      environment:
       - MYSQL_ROOT_PASSWORD=rootroot
-      - MYSQL_DATABASE=organisationdb
-      - MYSQL_USER=orguser
+      - MYSQL_DATABASE=hellodb
+      - MYSQL_USER=hellouser
       - MYSQL_PASSWORD=secret1234
      healthcheck:
-      test: mysql --user=orguser --password=secret1234 -e 'show databases;'
+      test: mysql --user=hellouser --password=secret1234 -e 'show databases;'
       interval: 2s
       timeout: 2s
       retries: 10
@@ -21,11 +21,11 @@ services:
       - ./frontend.json:/caddy/config.json
      ports:
       - 8080:80
-   organisationservice:
-     image: kvalitetsit/medcom-vdx-organisation:latest
+   helloservice:
+     image: kvalitetsit/kithugs:latest
      environment:
-      - jdbc_url=jdbc:mysql://mysql:3306/organisationdb
-      - jdbc_user=orguser
+      - jdbc_url=jdbc:mysql://mysql:3306/hellodb
+      - jdbc_user=hellouser
       - jdbc_pass=secret1234
       - usercontext_header_name=X-Test-Auth
 
@@ -40,7 +40,7 @@ services:
       mysql:
        condition: service_healthy
    documenatation-and-test:
-     image: kvalitetsit/medcom-vdx-organisation-documentation:latest
+     image: kvalitetsit/kithugs-documentation:latest
      environment:
       - BASE_URL=/test
      ports:

@@ -16,7 +16,7 @@ import java.util.Collections;
 
 public class ServiceStarter {
     private static final Logger logger = LoggerFactory.getLogger(ServiceStarter.class);
-    private static final Logger smsLogger = LoggerFactory.getLogger("sms");
+    private static final Logger kithugsLogger = LoggerFactory.getLogger("kithugs");
     private static final Logger mysqlLogger = LoggerFactory.getLogger("mysql");
 
     private Network dockerNetwork;
@@ -28,7 +28,7 @@ public class ServiceStarter {
         setupDatabaseContainer();
 
         System.setProperty("jdbc.url", jdbcUrl);
-        System.setProperty("jdbc.user", "smsuser");
+        System.setProperty("jdbc.user", "hellouser");
         System.setProperty("jdbc.pass", "secret1234");
 
         SpringApplication.run((VideoLinkHandlerApplication.class));
@@ -39,31 +39,31 @@ public class ServiceStarter {
 
         setupDatabaseContainer();
 
-        var resourcesContainerName = "medcom-sms-resources";
+        var resourcesContainerName = "kithugs-resources";
         var resourcesRunning = containerRunning(resourcesContainerName);
         logger.info("Resource container is running: " + resourcesRunning);
 
-        GenericContainer smsService;
+        GenericContainer kithugsService;
 
         // link handler
         if (resourcesRunning) {
             VolumesFrom volumesFrom = new VolumesFrom(resourcesContainerName);
-            smsService = new GenericContainer<>("local/medcom-sms-qa:dev")
+            kithugsService = new GenericContainer<>("local/kithugs-qa:dev")
                     .withCreateContainerCmdModifier(modifier -> modifier.withVolumesFrom(volumesFrom))
                     .withEnv("JVM_OPTS", "-javaagent:/jacoco/jacocoagent.jar=output=file,destfile=/jacoco-report/jacoco-it.exec,dumponexit=true,append=true -cp integrationtest.jar");
         } else {
-            smsService = new GenericContainer<>("local/medcom-sms-qa:dev")
+            kithugsService = new GenericContainer<>("local/kithugs-qa:dev")
                     .withFileSystemBind("/tmp", "/jacoco-report/")
                     .withEnv("JVM_OPTS", "-javaagent:/jacoco/jacocoagent.jar=output=file,destfile=/jacoco-report/jacoco-it.exec,dumponexit=true -cp integrationtest.jar");
         }
 
-        smsService.withNetwork(dockerNetwork)
-                .withNetworkAliases("sms")
+        kithugsService.withNetwork(dockerNetwork)
+                .withNetworkAliases("kithugs")
 
                 .withEnv("LOG_LEVEL", "INFO")
 
-                .withEnv("jdbc_url", "jdbc:mysql://mysql:3306/smsdb")
-                .withEnv("jdbc_user", "smsuser")
+                .withEnv("jdbc_url", "jdbc:mysql://mysql:3306/hellodb")
+                .withEnv("jdbc_user", "hellouser")
                 .withEnv("jdbc_pass", "secret1234")
 
                 .withEnv("spring.flyway.locations", "classpath:db/migration,filesystem:/app/sql")
@@ -72,10 +72,10 @@ public class ServiceStarter {
 
                 .withExposedPorts(8081,8080)
                 .waitingFor(Wait.forHttp("/actuator").forPort(8081).forStatusCode(200));
-        smsService.start();
-        attachLogger(smsLogger, smsService);
+        kithugsService.start();
+        attachLogger(kithugsLogger, kithugsService);
 
-        return smsService;
+        return kithugsService;
     }
 
     private boolean containerRunning(String containerName) {
@@ -91,8 +91,8 @@ public class ServiceStarter {
     private void setupDatabaseContainer() {
         // Database server for Organisation.
         MySQLContainer mysql = (MySQLContainer) new MySQLContainer("mysql:5.7")
-                .withDatabaseName("smsdb")
-                .withUsername("smsuser")
+                .withDatabaseName("hellodb")
+                .withUsername("hellouser")
                 .withPassword("secret1234")
                 .withNetwork(dockerNetwork)
                 .withNetworkAliases("mysql");

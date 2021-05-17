@@ -20,7 +20,7 @@
         </encoder>
     </appender>
 
-    <logger name="dk.medcom.sms" level="${LOG_LEVEL}" additivity="false">
+    <logger name="dk.kvalitetsit" level="${LOG_LEVEL}" additivity="false">
         <appender-ref ref="STDOUT" />
     </logger>
 

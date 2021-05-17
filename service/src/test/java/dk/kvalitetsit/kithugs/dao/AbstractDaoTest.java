@@ -23,16 +23,19 @@ abstract public class AbstractDaoTest {
     @BeforeClass
     public static void setupMySqlJdbcUrl() {
         if (initialized == null) {
+            var username = "hellouser";
+            var password = "secret1234";
+
             MySQLContainer mysql = new MySQLContainer("mysql:5.7")
-                    .withDatabaseName("smsdb")
-                    .withUsername("smsuser")
-                    .withPassword("secret1234");
+                    .withDatabaseName("hellodb")
+                    .withUsername(username)
+                    .withPassword(password);
             mysql.start();
 
             String jdbcUrl = mysql.getJdbcUrl();
             System.setProperty("jdbc.url", jdbcUrl);
-            System.setProperty("jdbc.user", "smsuser");
-            System.setProperty("jdbc.pass", "secret1234");
+            System.setProperty("jdbc.user", username);
+            System.setProperty("jdbc.pass", password);
 
             initialized = new Object();
         }

@@ -1,10 +1,10 @@
 package dk.kvalitetsit.kithugs.service.model;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 public class HelloServiceOutput {
     private String name;
-    private LocalDateTime now;
+    private ZonedDateTime now;
 
     public String getName() {
         return name;
@@ -14,11 +14,11 @@ public class HelloServiceOutput {
         this.name = name;
     }
 
-    public LocalDateTime getNow() {
+    public ZonedDateTime getNow() {
         return now;
     }
 
-    public void setNow(LocalDateTime now) {
+    public void setNow(ZonedDateTime now) {
         this.now = now;
     }
 }

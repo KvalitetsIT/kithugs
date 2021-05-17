@@ -10,7 +10,7 @@ import java.net.URISyntaxException;
 public abstract class AbstractIntegrationTest {
     private static final Logger logger = LoggerFactory.getLogger(AbstractIntegrationTest.class);
 
-    private static GenericContainer smsService;
+    private static GenericContainer helloService;
     private static String apiBasePath;
 
     static {
@@ -18,9 +18,9 @@ public abstract class AbstractIntegrationTest {
         {
             public void run()
             {
-                if(smsService != null) {
-                    logger.info("Stopping sms container: " + smsService.getContainerId());
-                    smsService.getDockerClient().stopContainerCmd(smsService.getContainerId()).exec();
+                if(helloService != null) {
+                    logger.info("Stopping hello service container: " + helloService.getContainerId());
+                    helloService.getDockerClient().stopContainerCmd(helloService.getContainerId()).exec();
                 }
             }
         });
@@ -39,8 +39,8 @@ public abstract class AbstractIntegrationTest {
         ServiceStarter serviceStarter;
         serviceStarter = new ServiceStarter();
         if(runInDocker) {
-            smsService = serviceStarter.startServicesInDocker();
-            apiBasePath = "http://" + smsService.getContainerIpAddress() + ":" + smsService.getMappedPort(8080);
+            helloService = serviceStarter.startServicesInDocker();
+            apiBasePath = "http://" + helloService.getContainerIpAddress() + ":" + helloService.getMappedPort(8080);
         }
         else {
             serviceStarter.startServices();

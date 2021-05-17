@@ -36,8 +36,8 @@ if [[ -z $CORRELATION_ID ]]; then
 fi
 
 if [[ -z $SERVICE_ID ]]; then
-  echo "Default SERVICE_ID = medcom-url-handler"
-  export SERVICE_ID=medcom-url-handler
+  echo "Default SERVICE_ID = kithugs"
+  export SERVICE_ID=kithugs
 fi
 
 JAR_FILE=web.jar

@@ -1,4 +1,6 @@
-FROM kvalitetsit/medcom-sms-documentation:latest AS oldDoc
+#FROM kvalitetsit/kithugs-documentation:latest AS oldDoc
+FROM swaggerapi/swagger-ui:v3.27.0 AS oldDoc
+
 COPY /maven/*.yaml /usr/share/nginx/html/
 
 FROM swaggerapi/swagger-ui:v3.27.0

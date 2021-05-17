@@ -17,12 +17,12 @@ public class HelloController {
     private static final Logger logger = LoggerFactory.getLogger(HelloController.class);
     private final HelloService helloService;
 
-    public HelloController(HelloService smsService) {
-        this.helloService = smsService;
+    public HelloController(HelloService helloService) {
+        this.helloService = helloService;
     }
 
     @PostMapping(value = "/v1/hello")
-    public @ResponseBody HelloResponse sms(@RequestBody(required = false) HelloRequest body) {
+    public @ResponseBody HelloResponse hello(@RequestBody(required = false) HelloRequest body) {
         logger.debug("Enter POST hello.");
 
         if(body == null) {

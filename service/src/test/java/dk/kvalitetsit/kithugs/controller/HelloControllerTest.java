@@ -11,6 +11,7 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.UUID;
 
 import static junit.framework.TestCase.assertNotNull;
@@ -33,7 +34,7 @@ public class HelloControllerTest {
         var input = new HelloRequest();
         input.setName(UUID.randomUUID().toString());
 
-        var expectedDate = LocalDateTime.now();
+        var expectedDate = ZonedDateTime.now();
         Mockito.when(helloService.helloServiceBusinessLogic(Mockito.any())).then(a -> {
             HelloServiceOutput output = new HelloServiceOutput();
             output.setNow(expectedDate);
@@ -41,7 +42,7 @@ public class HelloControllerTest {
             return output;
         });
 
-        var result = helloController.sms(input);
+        var result = helloController.hello(input);
 
         assertNotNull(result);
         assertEquals(input.getName(), result.getName());
@@ -56,6 +57,6 @@ public class HelloControllerTest {
 
     @Test(expected = BadRequestException.class)
     public void testNullInput() {
-        helloController.sms(null);
+        helloController.hello(null);
     }
 }

@@ -1,1 +1,0 @@
-insert into sms_status(id, organisation_code, reference_id, status, sms_gateway_reference, message_id, meeting_uuid) values(1, 'medcom', uuid(), 'SendToGateway', 'abc', '1349f41b-61f6-48ab-b1c5-d4de3856d93e', '8848d163-d0e4-4a64-b9eb-91f8672bcd32');

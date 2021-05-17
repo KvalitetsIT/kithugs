@@ -1,16 +1,16 @@
 package dk.kvalitetsit.kithugs.api;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 public class HelloResponse {
-    private LocalDateTime now;
+    private ZonedDateTime now;
     private String name;
 
-    public LocalDateTime getNow() {
+    public ZonedDateTime getNow() {
         return now;
     }
 
-    public void setNow(LocalDateTime now) {
+    public void setNow(ZonedDateTime now) {
         this.now = now;
     }
 
