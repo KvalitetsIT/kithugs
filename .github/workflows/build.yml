@@ -15,7 +15,7 @@ jobs:
     - name: Setup env variables
       run: |
         echo "DOCKER_SERVICE=kvalitetsit/kithugs" >> $GITHUB_ENV
-        echo "DOCKER_DOCUMENTAION=kvalitetsit/kithugs-documentation" >> $GITHUB_ENV
+        echo "DOCKER_DOCUMENTATION=kvalitetsit/kithugs-documentation" >> $GITHUB_ENV
 
 # Checkout source code
     - uses: actions/checkout@v2
