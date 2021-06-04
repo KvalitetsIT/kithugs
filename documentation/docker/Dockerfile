@@ -1,11 +1,7 @@
-#FROM kvalitetsit/kithugs-documentation:latest AS oldDoc
-FROM swaggerapi/swagger-ui:v3.27.0 AS oldDoc
+FROM swaggerapi/swagger-ui:v3.27.0
 
 COPY /maven/*.yaml /usr/share/nginx/html/
 
-FROM swaggerapi/swagger-ui:v3.27.0
-
-COPY --from=oldDoc /usr/share/nginx/html/*.yaml /usr/share/nginx/html/
 COPY /versions /kit/versions
 COPY /config/setVersion.sh /kit/setVersion.sh
 COPY /config/setServers.sh /kit/setServers.sh

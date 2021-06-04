@@ -71,6 +71,24 @@
 	<build>
 		<plugins>
 			<plugin>
+				<artifactId>exec-maven-plugin</artifactId>
+				<groupId>org.codehaus.mojo</groupId>
+				<version>3.0.0</version>
+				<executions>
+					<execution>
+						<id>Get old doc versions</id>
+						<phase>compile</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<configuration>
+							<executable>docker/getOldDoc.sh</executable>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
 				<groupId>io.fabric8</groupId>
 				<artifactId>docker-maven-plugin</artifactId>
 				<configuration>
@@ -89,13 +107,18 @@
 										<files>
 											<file>
 												<source>${project.basedir}/src/main/resources/helloservice.yaml</source>
-												<destName>${git.branch}.yaml</destName>
+												<destName>${git.commit.id.describe}.yaml</destName>
 											</file>
 											<file>
 												<source>${project.build.outputDirectory}/git.properties</source>
 												<destName>runningVersion.json</destName>
 											</file>
 										</files>
+										<fileSets>
+											<fileSet>
+												<directory>target/hejhej</directory>
+											</fileSet>
+										</fileSets>
 									</inline>
 									<descriptorRef>artifact</descriptorRef>
 									<targetDir>/app</targetDir>
@@ -170,9 +193,12 @@
 					<generateGitPropertiesFile>true</generateGitPropertiesFile>
 					<generateGitPropertiesFilename>${project.build.outputDirectory}/git.properties</generateGitPropertiesFilename>
 					<includeOnlyProperties>
-						<includeOnlyProperty>git.branch</includeOnlyProperty>
+						<includeOnlyProperty>git.commit.id.describe</includeOnlyProperty>
 					</includeOnlyProperties>
 					<commitIdGenerationMode>full</commitIdGenerationMode>
+					<gitDescribe>
+						<tags>true</tags>
+					</gitDescribe>
 					<format>json</format>
 				</configuration>
 			</plugin>

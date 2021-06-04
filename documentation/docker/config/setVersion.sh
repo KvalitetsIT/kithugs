@@ -1,4 +1,4 @@
-#! /bin/sh
+#!/bin/sh
 
 function updateFile {
     local f="$1"
@@ -11,10 +11,10 @@ function updateFile {
 }
 
 echo "Add Dev version to list of versions"
-GIT_BRANCH=$(cat /kit/runningVersion.json | jq -r '."git.branch"')
+GIT_BRANCH=$(cat /kit/runningVersion.json | jq -r '."git.commit.id.describe"')
 echo "[]" > /kit/env
 
-if (echo "$GIT_BRANCH" | grep -Eq ^v[0-9]*\\.[0-9]*\\.[0-9]*); then
+if (echo "$GIT_BRANCH" | grep -Eq ^v[0-9]*\\.[0-9]*\\.[0-9]*$); then
   echo "Release version"
 else
   echo "Is dev version"
