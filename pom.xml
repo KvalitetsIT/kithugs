@@ -13,6 +13,10 @@
 			<id>github-public</id>
 			<url>https://public:&#103;hp_Y6nRFazi9yNo0IMpxwTFIagW352c1539nyfn@maven.pkg.github.com/kvalitetsit/*</url>
 		</repository>
+		<repository>
+			<id>github-public1</id>
+			<url>https://public:&#103;hp_Y6nRFazi9yNo0IMpxwTFIagW352c1539nyfn@maven.pkg.github.com/kvalitetsit/*</url>
+		</repository>
 	</repositories>
 
 	<modules>
