@@ -81,7 +81,7 @@ jobs:
       run: ./build/docker-tag.sh ${{ env.DOCKER_DOCUMENTATION }}:latest ${{ env.DOCKER_DOCUMENTATION }}:dev
 
     - name: Push documentation dev docker image
-      run: ./build/docker-push.sh ${{ env.DOCKER_SERVICE }}:dev
+      run: ./build/docker-push.sh ${{ env.DOCKER_DOCUMENTATION }}:dev
 
     - name: Tag documentation git id docker image
       run: ./build/docker-tag.sh ${{ env.DOCKER_DOCUMENTATION }}:latest ${{ env.DOCKER_DOCUMENTATION }}:${{ github.sha }}
