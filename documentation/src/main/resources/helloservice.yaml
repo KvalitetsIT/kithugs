@@ -81,3 +81,7 @@ components:
           type: string
           example: "John Doe"
 
+        test:
+          description: Hej hehj
+          type: string
+
