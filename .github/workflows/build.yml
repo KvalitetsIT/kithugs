@@ -69,7 +69,7 @@ jobs:
       run: ./build/docker-tag.sh ${{ env.DOCKER_SERVICE }}:latest ${{ env.DOCKER_SERVICE }}:dev
 
     - name: Push service dev docker image
-      run: ./build/docker-push.sh kvalitetsit/medcom-sms:dev
+      run: ./build/docker-push.sh ${{ env.DOCKER_SERVICE }}:dev
 
     - name: Tag service git id docker image
       run: ./build/docker-tag.sh ${{ env.DOCKER_SERVICE }}:latest ${{ env.DOCKER_SERVICE }}:${{ github.sha }}
