@@ -36,7 +36,7 @@
 	<properties>
 		<java.version>11</java.version>
 		<testcontainers.version>1.15.1</testcontainers.version>
-		<spring-prometheus-app-info-version>0.0.5</spring-prometheus-app-info-version>
+		<spring-prometheus-app-info-version>1.0.1</spring-prometheus-app-info-version>
 	</properties>
 
 	<dependencyManagement>
