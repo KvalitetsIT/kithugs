@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>kithugs</artifactId>
+        <groupId>dk.kvalitetsit.kithugs</groupId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>testreport</artifactId>
+
+    <dependencies>
+        <dependency>
+            <groupId>dk.kvalitetsit.kithugs</groupId>
+            <artifactId>service</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>dk.kvalitetsit.kithugs</groupId>
+            <artifactId>integrationtest</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>dk.kvalitetsit.kithugs</groupId>
+            <artifactId>web</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>report-aggregate</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>report-aggregate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>

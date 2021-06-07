@@ -1,0 +1,82 @@
+openapi: 3.0.0
+info:
+  title: Kithugs
+  description: API description for KITHUGS.
+  version: "1.0.0"
+  contact:
+    email: development@kvalitetitsit.dk
+tags:
+  - name: KITHUGS
+    description: KITHUGS related API's
+
+servers:
+  - url: '{protocol}://{environment}:{port}'
+    variables:
+      protocol:
+        enum:
+          - http
+          - https
+        default: http
+      environment:
+        enum:
+          - localhost # Docker-compose setup
+        default: localhost # Development
+      port:
+        enum:
+          - 8080
+        default: 8080
+paths:
+  /v1/hello:
+    post:
+      tags:
+        - KITHUGS
+      summary: Call the thugs service
+      description: Post your name and get some hugs or meet some thugs.
+      requestBody:
+        description: Your name
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/helloRequest'
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/helloResponse'
+
+components:
+  responses:
+    '400':
+      description: "Bad Request. This could be because: * One of the required parameters/properties are missing or is empty <br> * Length of input is exceeding maximum length <br> (See a possible detailed error message in the in the response.)"
+    '401':
+      description: "Unauthorized. This could be because: <br> * The calling system has not been properly authenticated."
+    '403':
+      description: "Forbidden. This could be because: <br> * The requested information does not belong the organisation of the user <br> * The calling user does not have the required roles"
+  schemas:
+    helloResponse:
+      type: object
+      required:
+        - name
+        - now
+      properties:
+        name:
+          description: Your name
+          type: string
+          example: "John Doe"
+        now:
+          description: Time request was receved
+          type: string
+          format: date-time
+
+    helloRequest:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          description: Your name
+          type: string
+          example: "John Doe"

@@ -1,0 +1,83 @@
+ {
+  "logging": {
+    "logs": {
+      "default": {
+        "level": "info"
+      }
+    }
+  },
+  "apps": {
+    "tls": {
+    },
+    "http": {
+      "servers": {
+	"srv80": {
+          "automatic_https": {
+            "disable": true
+          },
+          "logs": {
+	  },
+          "listen": [
+            ":80"
+          ],
+          "routes": [
+          {
+             "match": [
+              {
+                "path": [
+                   "/test/"
+                ]
+              }
+             ],
+             "handle": [
+                {
+                  "handler": "reverse_proxy",
+                  "transport": {
+                    "protocol": "http",
+                    "read_buffer_size": 4096
+                  },
+                  "upstreams": [
+                    {
+                      "dial": "documenatation-and-test:8080"
+                    }
+                  ]
+                }
+             ]
+           },
+           {
+             "match": [
+              {
+                "path": [
+                   "/"
+                ]
+              }
+             ],
+             "handle": [
+                {
+                  "handler": "headers",
+	          "request": {
+		     "set": {
+			"X-Test-Auth": ["eyAiVXNlckF0dHJpYnV0ZXMiOiB7ICJVc2VyUm9sZXMiOiBbInByb3Zpc2lvbmVycm9sZSJdIH19Cg=="]
+                     }
+		  }
+                },
+                {
+                  "handler": "reverse_proxy",
+                  "transport": {
+                    "protocol": "http",
+                    "read_buffer_size": 4096
+                  },
+                  "upstreams": [
+                    {
+                      "dial": "organisationservice:8080"
+                    }
+                  ]
+                }
+             ]
+           }
+          ]
+	}
+      }
+    }
+  }
+}

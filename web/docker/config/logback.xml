@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+            <providers>
+                <timestamp />
+                <pattern>
+                    <pattern>
+                        {
+                        "logger": "%logger",
+                        "level": "%level",
+                        "correlation-id": "%X{correlation-id}",
+                        "thread": "%thread",
+                        "message": "%m"
+                        }
+                    </pattern>
+                </pattern>
+                <stackTrace/>
+            </providers>
+        </encoder>
+    </appender>
+
+    <logger name="dk.kvalitetsit" level="${LOG_LEVEL}" additivity="false">
+        <appender-ref ref="STDOUT" />
+    </logger>
+
+    <root level="${LOG_LEVEL_FRAMEWORK}">
+        <appender-ref ref="STDOUT" />
+    </root>
+</configuration>

@@ -1,0 +1,28 @@
+name: Pull Request CI
+
+on:
+  pull_request: ~
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+# Checkout source code
+    - uses: actions/checkout@v2
+
+# Cache maven stuff
+    - name: Cache local Maven repository
+      uses: actions/cache@v2
+      with:
+        path: ~/.m2/repository
+        key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+        restore-keys: |
+          ${{ runner.os }}-maven-
+
+    - name: Build and test
+      run: ./build/build.sh
+
+    - name: Log coverage percentage
+      run: |
+        echo "coverage = ${{ steps.jacoco.outputs.coverage }}"
