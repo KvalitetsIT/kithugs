@@ -20,19 +20,9 @@ if [[ -z $LOG_LEVEL_FRAMEWORK ]]; then
   export LOG_LEVEL_FRAMEWORK=INFO
 fi
 
-if [[ -z $LOGGING_CONFIG ]]; then
-  echo "Default logging config file is used: /app/logback-spring.xml"
-  export LOGGING_CONFIG=/app/logback-spring.xml
-fi
-
-if [[ -z $CONFIGURATION ]]; then
-  echo "Default organization configuration file location is used: /app/organization.json"
-  export CONFIGURATION=/app/organization.json
-fi
-
 if [[ -z $CORRELATION_ID ]]; then
   echo "Default CORRELATION_ID = correlation-id"
-  export CORRELATION_ID=correlation-id
+  export CORRELATION_ID=x-request-id
 fi
 
 if [[ -z $SERVICE_ID ]]; then
