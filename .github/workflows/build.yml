@@ -2,7 +2,7 @@ name: CICD
 
 on:
   push:
-    branches: [ main, dev ]
+    branches: [ main, dev, build-fix ]
     tags:
       - 'v*.*.*'
 
@@ -19,6 +19,10 @@ jobs:
 
 # Checkout source code
     - uses: actions/checkout@v2
+
+# Fail if DOCKER_SERVICE is kithugs and repo is not kithugs. This step can be deleted once
+    - name: Initial build
+      run: ./build/failOnFirstBuild.sh
 
 # Cache maven stuff
     - name: Cache local Maven repository
