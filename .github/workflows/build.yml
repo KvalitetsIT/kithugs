@@ -2,7 +2,7 @@ name: CICD
 
 on:
   push:
-    branches: [ main, dev ]
+    branches: [ main, dev, build-fix ]
     tags:
       - 'v*.*.*'
 
