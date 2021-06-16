@@ -11,13 +11,13 @@ import static org.junit.Assert.assertNotNull;
 
 public class HelloIT extends AbstractIntegrationTest {
 
-    private final KithugsApi kithugsApi;
+    private final KithugsApi helloApi;
 
     public HelloIT() {
         var apiClient = new ApiClient();
         apiClient.setBasePath(getApiBasePath());
 
-        kithugsApi = new KithugsApi(apiClient);
+        helloApi = new KithugsApi(apiClient);
     }
 
     @Test
@@ -25,7 +25,7 @@ public class HelloIT extends AbstractIntegrationTest {
         var input = new HelloRequest();
         input.setName("John Doe");
 
-        var result = kithugsApi.v1HelloPost(input);
+        var result = helloApi.v1HelloPost(input);
 
         assertNotNull(result);
         assertEquals(input.getName(), result.getName());

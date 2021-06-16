@@ -16,7 +16,7 @@ import java.util.Collections;
 
 public class ServiceStarter {
     private static final Logger logger = LoggerFactory.getLogger(ServiceStarter.class);
-    private static final Logger kithugsLogger = LoggerFactory.getLogger("kithugs");
+    private static final Logger serviceLogger = LoggerFactory.getLogger("kithugs");
     private static final Logger mysqlLogger = LoggerFactory.getLogger("mysql");
 
     private Network dockerNetwork;
@@ -43,21 +43,21 @@ public class ServiceStarter {
         var resourcesRunning = containerRunning(resourcesContainerName);
         logger.info("Resource container is running: " + resourcesRunning);
 
-        GenericContainer kithugsService;
+        GenericContainer service;
 
         // link handler
         if (resourcesRunning) {
             VolumesFrom volumesFrom = new VolumesFrom(resourcesContainerName);
-            kithugsService = new GenericContainer<>("local/kithugs-qa:dev")
+            service = new GenericContainer<>("local/kithugs-qa:dev")
                     .withCreateContainerCmdModifier(modifier -> modifier.withVolumesFrom(volumesFrom))
                     .withEnv("JVM_OPTS", "-javaagent:/jacoco/jacocoagent.jar=output=file,destfile=/jacoco-report/jacoco-it.exec,dumponexit=true,append=true -cp integrationtest.jar");
         } else {
-            kithugsService = new GenericContainer<>("local/kithugs-qa:dev")
+            service = new GenericContainer<>("local/kithugs-qa:dev")
                     .withFileSystemBind("/tmp", "/jacoco-report/")
                     .withEnv("JVM_OPTS", "-javaagent:/jacoco/jacocoagent.jar=output=file,destfile=/jacoco-report/jacoco-it.exec,dumponexit=true -cp integrationtest.jar");
         }
 
-        kithugsService.withNetwork(dockerNetwork)
+        service.withNetwork(dockerNetwork)
                 .withNetworkAliases("kithugs")
 
                 .withEnv("LOG_LEVEL", "INFO")
@@ -72,10 +72,10 @@ public class ServiceStarter {
 
                 .withExposedPorts(8081,8080)
                 .waitingFor(Wait.forHttp("/actuator").forPort(8081).forStatusCode(200));
-        kithugsService.start();
-        attachLogger(kithugsLogger, kithugsService);
+        service.start();
+        attachLogger(serviceLogger, service);
 
-        return kithugsService;
+        return service;
     }
 
     private boolean containerRunning(String containerName) {
