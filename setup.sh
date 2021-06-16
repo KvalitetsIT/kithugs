@@ -7,7 +7,6 @@ do
   if [ ! -d "${input_file}" ]; then
     echo "Processing file: ${input_file}"
     sed -i -e "s/kithugs/$1/g" "${input_file}"
-    sed -i -e "s/KITHUGS/$1/g" "${input_file}"
   fi
 done
 
