@@ -27,9 +27,9 @@ public class ServiceStarter {
 
         setupDatabaseContainer();
 
-        System.setProperty("jdbc.url", jdbcUrl);
-        System.setProperty("jdbc.user", "hellouser");
-        System.setProperty("jdbc.pass", "secret1234");
+        System.setProperty("JDBC.URL", jdbcUrl);
+        System.setProperty("JDBC.USER", "hellouser");
+        System.setProperty("JDBC.PASS", "secret1234");
 
         SpringApplication.run((VideoLinkHandlerApplication.class));
     }
@@ -62,9 +62,9 @@ public class ServiceStarter {
 
                 .withEnv("LOG_LEVEL", "INFO")
 
-                .withEnv("jdbc_url", "jdbc:mysql://mysql:3306/hellodb")
-                .withEnv("jdbc_user", "hellouser")
-                .withEnv("jdbc_pass", "secret1234")
+                .withEnv("JDBC_URL", "jdbc:mysql://mysql:3306/hellodb")
+                .withEnv("JDBC_USER", "hellouser")
+                .withEnv("JDBC_PASS", "secret1234")
 
                 .withEnv("spring.flyway.locations", "classpath:db/migration,filesystem:/app/sql")
 
