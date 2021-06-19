@@ -28,3 +28,8 @@ target
 # IntelliJ stuff
 *.iml
 .idea
+
+# Eclipse stuff
+.project
+.settings/
+.classpath
