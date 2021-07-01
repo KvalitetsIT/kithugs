@@ -11,7 +11,7 @@
 	<properties>
 		<swagger-core-version>1.5.22</swagger-core-version>
 		<gson-fire-version>1.8.3</gson-fire-version>
-		<threetenbp-version>1.4.0</threetenbp-version>
+		<commons-lang3-version>3.9</commons-lang3-version>
 		<commons-lang3-version>3.9</commons-lang3-version>
 		<javax-annotation-version>1.0</javax-annotation-version>
 	</properties>
@@ -56,11 +56,6 @@
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
 			<version>${commons-lang3-version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.threeten</groupId>
-			<artifactId>threetenbp</artifactId>
-			<version>${threetenbp-version}</version>
 		</dependency>
 		<dependency>
 			<groupId>javax.annotation</groupId>
@@ -152,6 +147,7 @@
 							<generatorName>java</generatorName>
 							<configOptions>
 								<sourceFolder>src/generated-sources/java/main</sourceFolder>
+								<dateLibrary>java8</dateLibrary>
 							</configOptions>
 							<generateApiTests>false</generateApiTests>
 							<generateModelTests>false</generateModelTests>
