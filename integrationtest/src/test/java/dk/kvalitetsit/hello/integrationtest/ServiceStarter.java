@@ -45,7 +45,7 @@ public class ServiceStarter {
 
         GenericContainer service;
 
-        // link handler
+        // Start service
         if (resourcesRunning) {
             VolumesFrom volumesFrom = new VolumesFrom(resourcesContainerName);
             service = new GenericContainer<>("local/kithugs-qa:dev")
@@ -68,7 +68,7 @@ public class ServiceStarter {
 
                 .withEnv("spring.flyway.locations", "classpath:db/migration,filesystem:/app/sql")
 
-                .withEnv("JVM_OPTS", "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8000")
+//                .withEnv("JVM_OPTS", "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8000")
 
                 .withExposedPorts(8081,8080)
                 .waitingFor(Wait.forHttp("/actuator").forPort(8081).forStatusCode(200));
