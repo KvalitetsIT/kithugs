@@ -1,5 +1,8 @@
 #!/bin/sh
 
+apt-get update
+apt-get install -y docker.io
+
 SRC_FOLDER=src
 
 if [ -d $SRC_FOLDER ]; then
