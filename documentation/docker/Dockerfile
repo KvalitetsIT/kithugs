@@ -1,7 +1,6 @@
 FROM swaggerapi/swagger-ui:v3.27.0
 
 COPY /maven/*.yaml /usr/share/nginx/html/
-COPY /maven/target/hejhej/*.yaml /usr/share/nginx/html/
 
 COPY /versions /kit/versions
 COPY /config/setVersion.sh /kit/setVersion.sh

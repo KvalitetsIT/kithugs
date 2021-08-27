@@ -111,7 +111,8 @@
 										</files>
 										<fileSets>
 											<fileSet>
-												<directory>target/hejhej</directory>
+												<directory>target/old</directory>
+												<outputDirectory>/</outputDirectory>
 											</fileSet>
 										</fileSets>
 									</inline>
