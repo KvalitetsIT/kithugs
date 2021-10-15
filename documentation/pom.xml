@@ -8,60 +8,66 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<artifactId>documentation</artifactId>
-	<properties>
-		<swagger-core-version>1.5.22</swagger-core-version>
-		<gson-fire-version>1.8.3</gson-fire-version>
-		<commons-lang3-version>3.9</commons-lang3-version>
-		<commons-lang3-version>3.9</commons-lang3-version>
-		<javax-annotation-version>1.0</javax-annotation-version>
-	</properties>
+
 	<dependencies>
+		<!-- Dependencies for server interface -->
+		<dependency>
+			<groupId>org.openapitools</groupId>
+			<artifactId>jackson-databind-nullable</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-validation</artifactId>
+		</dependency>
+
 		<dependency>
 			<groupId>io.swagger</groupId>
 			<artifactId>swagger-annotations</artifactId>
-			<version>${swagger-core-version}</version>
 		</dependency>
-		<!-- @Nullable annotation -->
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-core</artifactId>
+		</dependency>
+
+		<!-- Test dependencies -->
 		<dependency>
 			<groupId>com.google.code.findbugs</groupId>
 			<artifactId>jsr305</artifactId>
-			<version>3.0.2</version>
+			<scope>test</scope>
 		</dependency>
+
 		<dependency>
 			<groupId>com.squareup.okhttp3</groupId>
 			<artifactId>okhttp</artifactId>
-			<version>4.9.1</version>
+			<scope>test</scope>
 		</dependency>
+
 		<dependency>
 			<groupId>com.squareup.okhttp3</groupId>
 			<artifactId>logging-interceptor</artifactId>
 			<version>4.9.1</version>
-			<exclusions>
-				<exclusion>
-					<groupId>com.squareup.okhttp3</groupId>
-					<artifactId>okhttp</artifactId>
-				</exclusion>
-			</exclusions>
+			<scope>test</scope>
 		</dependency>
+
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>
+			<scope>test</scope>
 		</dependency>
+
 		<dependency>
 			<groupId>io.gsonfire</groupId>
 			<artifactId>gson-fire</artifactId>
-			<version>${gson-fire-version}</version>
+			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-lang3</artifactId>
-			<version>${commons-lang3-version}</version>
-		</dependency>
-		<dependency>
-			<groupId>javax.annotation</groupId>
-			<artifactId>jsr250-api</artifactId>
-			<version>${javax-annotation-version}</version>
-		</dependency>
+
 	</dependencies>
 	<build>
 		<plugins>
@@ -147,29 +153,35 @@
 							<inputSpec>${project.basedir}/src/main/resources/helloservice.yaml</inputSpec>
 							<generatorName>java</generatorName>
 							<configOptions>
-								<sourceFolder>src/generated-sources/java/main</sourceFolder>
+								<sourceFolder>src/test/java</sourceFolder>
 								<dateLibrary>java8</dateLibrary>
 							</configOptions>
+							<output>${project.build.directory}/generated-test-sources/openapi/test</output>
 							<generateApiTests>false</generateApiTests>
 							<generateModelTests>false</generateModelTests>
+							<addTestCompileSourceRoot>true</addTestCompileSourceRoot>
+							<addCompileSourceRoot>false</addCompileSourceRoot>
 						</configuration>
 					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>build-helper-maven-plugin</artifactId>
-				<executions>
 					<execution>
-						<id>add-source</id>
-						<phase>generate-sources</phase>
+						<id>server</id>
 						<goals>
-							<goal>add-source</goal>
+							<goal>generate</goal>
 						</goals>
 						<configuration>
-							<sources>
-								<source>${project.build.directory}/generated-sources/java/</source>
-							</sources>
+							<inputSpec>${project.basedir}/src/main/resources/helloservice.yaml</inputSpec>
+							<generatorName>spring</generatorName>
+							<configOptions>
+								<sourceFolder>src/main/java</sourceFolder>
+								<dateLibrary>java8</dateLibrary>
+								<interfaceOnly>true</interfaceOnly>
+								<performBeanValidation>true</performBeanValidation>
+								<library>spring-cloud</library>
+							</configOptions>
+							<output>${project.build.directory}/generated-sources/openapi/main</output>
+							<generateApiDocumentation>false</generateApiDocumentation>
+							<generateApiTests>false</generateApiTests>
+							<generateModelTests>false</generateModelTests>
 						</configuration>
 					</execution>
 				</executions>
@@ -198,6 +210,18 @@
 					</gitDescribe>
 					<format>json</format>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>2.5</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>test-jar</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>

@@ -1,7 +1,5 @@
 package dk.kvalitetsit.hello.controller;
 
-import dk.kvalitetsit.hello.api.HelloRequest;
-import dk.kvalitetsit.hello.controller.exception.BadRequestException;
 import dk.kvalitetsit.hello.service.HelloService;
 import dk.kvalitetsit.hello.service.model.HelloServiceInput;
 import dk.kvalitetsit.hello.service.model.HelloServiceOutput;
@@ -9,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
+import org.openapitools.model.HelloRequest;
 
 import java.time.ZonedDateTime;
 import java.util.UUID;
@@ -41,21 +40,16 @@ public class HelloControllerTest {
             return output;
         });
 
-        var result = helloController.hello(input);
+        var result = helloController.v1HelloPost(input);
 
         assertNotNull(result);
-        assertEquals(input.getName(), result.getName());
-        assertEquals(expectedDate, result.getNow());
+        assertEquals(input.getName(), result.getBody().getName());
+        assertEquals(expectedDate.toOffsetDateTime(), result.getBody().getNow());
 
         var inputArgumentCaptor = ArgumentCaptor.forClass(HelloServiceInput.class);
         Mockito.verify(helloService, times(1)).helloServiceBusinessLogic(inputArgumentCaptor.capture());
 
         assertNotNull(inputArgumentCaptor.getValue());
         assertEquals(input.getName(), inputArgumentCaptor.getValue().getName());
-    }
-
-    @Test(expected = BadRequestException.class)
-    public void testNullInput() {
-        helloController.hello(null);
     }
 }
