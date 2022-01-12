@@ -1,4 +1,4 @@
-FROM adoptopenjdk:11-jre-openj9
+FROM ibm-semeru-runtimes:open-11-jre
 
 RUN apt-get update && apt-get install -y tzdata
 
