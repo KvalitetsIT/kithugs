@@ -116,3 +116,9 @@ jobs:
     - name: Push version documentation docker image.
       if: ${{ steps.tag.conclusion != 'skipped' }}
       run: ./build/docker-push.sh ${{ env.DOCKER_DOCUMENTATION }}:${{ steps.tag.outputs.VERSION }}
+
+    - name: Create Release Notes
+      uses: softprops/action-gh-release@v1
+      if: ${{ steps.tag.conclusion != 'skipped' }}
+      with:
+        generate_release_notes: true
