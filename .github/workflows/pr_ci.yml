@@ -23,6 +23,20 @@ jobs:
     - name: Build and test
       run: ./build/build.sh
 
-    - name: Log coverage percentage
+    - name: Upload Jacoco coverage report
+      uses: actions/upload-artifact@v2
+      with:
+        name: jacoco-report
+        path: testreport/target/site/jacoco-aggregate/
+
+    - name: Save PR number
       run: |
-        echo "coverage = ${{ steps.jacoco.outputs.coverage }}"
+        mkdir -p ./pr
+        echo ${{ github.event.number }} > ./pr/NR
+
+    - uses: actions/upload-artifact@v2
+      with:
+        name: pr
+        path: |
+          pr/
+          testreport/target/site/jacoco-aggregate/jacoco.csv

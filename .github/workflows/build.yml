@@ -49,26 +49,6 @@ jobs:
     - name: Build and test
       run: ./build/build.sh
 
-    - name: Generate Jacoco Badge
-      id: jacoco
-      uses: cicirello/jacoco-badge-generator@v1.0.0
-      with:
-        jacoco-csv-file: testreport/target/site/jacoco-aggregate/jacoco.csv
-
-    - name: Log coverage percentage
-      run: |
-        echo "coverage = ${{ steps.jacoco.outputs.coverage }}"
-
-    - name: Update coverage badge
-      if: ${{ steps.tag.conclusion == 'skipped' }}
-      run: ./build/badge-update.sh
-
-    - name: Upload Jacoco coverage report
-      uses: actions/upload-artifact@v2
-      with:
-        name: jacoco-report
-        path: testreport/target/site/jacoco-aggregate/
-
     - name: Tag service dev docker image
       run: ./build/docker-tag.sh ${{ env.DOCKER_SERVICE }}:latest ${{ env.DOCKER_SERVICE }}:dev
 
