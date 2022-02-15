@@ -8,5 +8,3 @@ USER root
 RUN apt-get update && \
     apt-get install -y unzip && \
     unzip /jacoco/jacoco-agent.jar jacocoagent.jar -d /jacoco/
-
-USER appuser
