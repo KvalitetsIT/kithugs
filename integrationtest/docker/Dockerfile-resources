@@ -3,13 +3,9 @@ FROM bash:latest
 # Jacoco agent jar file.
 VOLUME /jacoco-report
 
-RUN groupadd --gid 11000 appuser && \
-    useradd --gid 11000 --uid 11001 -m appuser && \
-    chown appuser /jacoco-report
+RUN chmod 777 /jacoco-report
 
 # Loop script to avoid termination of container.
 ADD ./loop.sh /loop.sh
-
-USER appuser
 
 CMD [ "/loop.sh" ]
