@@ -6,8 +6,8 @@ then
 fi
 
 if [[ -z $LOGGING_CONFIG ]]; then
-  echo "Default logback configuration file: /app/logback-spring.xml"
-  export LOGGING_CONFIG=/app/logback-spring.xml
+  echo "Default logback configuration file: /home/appuser/logback-spring.xml"
+  export LOGGING_CONFIG=/home/appuser/logback-spring.xml
 fi
 
 if [[ -z $LOG_LEVEL ]]; then

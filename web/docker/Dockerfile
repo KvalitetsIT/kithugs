@@ -2,16 +2,17 @@ FROM ibm-semeru-runtimes:open-11-jre
 
 RUN apt-get update && apt-get install -y tzdata
 
-WORKDIR /
-COPY entrypoint.sh .
-RUN chmod +x entrypoint.sh
+RUN groupadd --gid 11000 appuser && \
+    useradd --gid 11000 --uid 11001 -m appuser
 
-RUN mkdir /app
-WORKDIR /app
-COPY config/logback.xml ./logback-spring.xml
+WORKDIR /home/appuser
+COPY entrypoint.sh .
+
+COPY config/logback.xml logback-spring.xml
 COPY /maven/web-exec.jar web.jar
 
 EXPOSE 8080
 EXPOSE 8081
 
-ENTRYPOINT ["/entrypoint.sh"]
+USER appuser
+ENTRYPOINT ["/home/appuser/entrypoint.sh"]
