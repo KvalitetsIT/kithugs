@@ -3,8 +3,6 @@ FROM bash:latest
 # Jacoco agent jar file.
 VOLUME /jacoco-report
 
-RUN chmod 777 /jacoco-report
-
 # Loop script to avoid termination of container.
 ADD ./loop.sh /loop.sh
 
