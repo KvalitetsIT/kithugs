@@ -12,15 +12,6 @@ services:
       interval: 2s
       timeout: 2s
       retries: 10
-   testfrontend:
-     image: kvalitetsit/gooioidwsrest:1.1.14
-     command:
-      - "-config"
-      - "/caddy/config.json"
-     volumes:
-      - ./frontend.json:/caddy/config.json
-     ports:
-      - 8080:80
    helloservice:
      image: kvalitetsit/kithugs:latest
      environment:
@@ -39,9 +30,12 @@ services:
      depends_on:
       mysql:
        condition: service_healthy
+     ports: 
+      - 8080:8080
    documenatation-and-test:
      image: kvalitetsit/kithugs-documentation:latest
      environment:
       - BASE_URL=/test
+      - 'SERVER_URLS=[{"url": "http://localhost:8080", "name": "HelloService"}]'
      ports:
       - 80:8080
