@@ -18,7 +18,7 @@ jobs:
         echo "DOCKER_DOCUMENTATION=kvalitetsit/kithugs-documentation" >> $GITHUB_ENV
 
 # Checkout source code
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
 
 # Fail if DOCKER_SERVICE is kithugs and repo is not kithugs. This step can be deleted once
     - name: Initial build
