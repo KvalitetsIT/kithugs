@@ -29,6 +29,9 @@ jobs:
           format: 'json'
           output: 'trivy-results.json'
 
+      - name: Show Trivy
+        run: cat trivy-results.json
+
       - name: Trivy upload
         run: |
           curl -v -X POST -H 'X-KEY: ${{ secrets.TRIVY_KEY }}' -H 'Content-Type: application/json' -d @trivy-results.json ${{ secrets.TRIVY_ENDPOINT }}
