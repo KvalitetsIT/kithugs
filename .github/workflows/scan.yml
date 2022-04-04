@@ -1,0 +1,30 @@
+name: Scan
+
+on:
+  workflow_run:
+    workflows: ["CICD"]
+    types:
+      - completed
+  schedule:
+    - cron: "0 6 * * 1"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Set docker image names.
+      - name: Setup env variables
+        run: |
+          echo "DOCKER_SERVICE=kvalitetsit/kithugs" >> $GITHUB_ENV
+
+      - name: Run Trivy vulnerability scanner json
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: '${{ env.DOCKER_SERVICE }}:dev'
+          format: 'json'
+          output: 'trivy-results.json'
+
+      - name: Trivy upload
+        run: |
+          curl -v -X POST -H 'X-KEY: ${{ secrets.TRIVY_KEY }}' -H 'Content-Type: application/json' -d @trivy-results.json ${{ secrets.TRIVY_ENDPOINT }}
