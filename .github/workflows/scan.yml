@@ -6,7 +6,7 @@ on:
     types:
       - completed
   schedule:
-    - cron: "0 6 * * 1"
+    - cron: "0 6 * * *"
   push:
     branches:
       - github
