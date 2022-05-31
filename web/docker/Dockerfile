@@ -1,4 +1,4 @@
-FROM ibm-semeru-runtimes:open-11-jre
+FROM ibm-semeru-runtimes:open-17-jre
 
 RUN apt-get update && apt-get install -y tzdata
 
