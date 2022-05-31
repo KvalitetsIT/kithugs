@@ -1,7 +1,7 @@
 version: '2.1'
 services:
-   mysql:
-     image: mysql:5.7
+   mariadb:
+     image: mariadb:10.6
      environment:
       - MYSQL_ROOT_PASSWORD=rootroot
       - MYSQL_DATABASE=hellodb
@@ -15,7 +15,7 @@ services:
    helloservice:
      image: kvalitetsit/kithugs:latest
      environment:
-      - jdbc_url=jdbc:mysql://mysql:3306/hellodb
+      - jdbc_url=jdbc:mariadb://mariadb:3306/hellodb
       - jdbc_user=hellouser
       - jdbc_pass=secret1234
       - usercontext_header_name=X-Test-Auth
@@ -28,7 +28,7 @@ services:
       - userrole_monitor_values=monitorrole
       - userrole_provisioner_values=provisionerrole
      depends_on:
-      mysql:
+      mariadb:
        condition: service_healthy
      ports: 
       - 8080:8080
