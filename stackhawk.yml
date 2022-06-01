@@ -10,8 +10,8 @@ app:
 
 # -- Customized Configuration for GraphQL/SOAP/OpenAPI, add here --
   openApiConf:
-    path: /v1/hello # OR...
-#     filePath: openApi.json
+#    path: /v1/hello # OR...
+    filePath: documentation/src/main/resources/helloservice.yaml
   autoPolicy: true
   autoInputVectors: true
   # Configuration Docs: https://docs.stackhawk.com/hawkscan/configuration/
