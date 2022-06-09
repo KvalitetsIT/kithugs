@@ -39,7 +39,7 @@
 
 	<properties>
 		<java.version>17</java.version>
-		<testcontainers.version>1.15.1</testcontainers.version>
+		<testcontainers.version>1.17.2</testcontainers.version>
 		<spring-prometheus-app-info-version>1.2.0</spring-prometheus-app-info-version>
 		<spring-request-id-logger-version>1.2.0</spring-request-id-logger-version>
 		<jacoco-version>0.8.8</jacoco-version>
@@ -84,7 +84,7 @@
 			<dependency>
 				<groupId>net.logstash.logback</groupId>
 				<artifactId>logstash-logback-encoder</artifactId>
-				<version>6.3</version>
+				<version>7.2</version>
 			</dependency>
 
 			<!-- Actuator and prometheus -->
@@ -105,7 +105,7 @@
 			<dependency>
 				<groupId>org.openapitools</groupId>
 				<artifactId>jackson-databind-nullable</artifactId>
-				<version>0.2.1</version>
+				<version>0.2.2</version>
 			</dependency>
 
 			<!-- Springfox - used as part of API itnerface generation -->
@@ -115,12 +115,26 @@
 				<version>3.0.0</version>
 			</dependency>
 
-			<!-- Swagger core -->
+			<!-- Swagger annotations -->
+			<dependency>
+				<groupId>io.swagger.core.v3</groupId>
+				<artifactId>swagger-annotations</artifactId>
+				<version>2.2.0</version>
+			</dependency>
+
 			<dependency>
 				<groupId>io.swagger</groupId>
 				<artifactId>swagger-annotations</artifactId>
-				<version>1.5.22</version>
+				<version>1.6.6</version>
 			</dependency>
+
+			<!-- javax ws rs -->
+			<dependency>
+				<groupId>javax.ws.rs</groupId>
+				<artifactId>javax.ws.rs-api</artifactId>
+				<version>2.1.1</version>
+			</dependency>
+
 
 			<!-- Test dependencies - test containers -->
 			<dependency>
@@ -144,7 +158,7 @@
 			<dependency>
 				<groupId>org.mock-server</groupId>
 				<artifactId>mockserver-client-java</artifactId>
-				<version>3.12</version>
+				<version>5.13.2</version>
 			</dependency>
 
 			<!-- Code coverage -->
@@ -165,7 +179,7 @@
 			<dependency>
 				<groupId>com.squareup.okhttp3</groupId>
 				<artifactId>okhttp</artifactId>
-				<version>4.9.1</version>
+				<version>4.9.3</version>
 				<scope>test</scope>
 			</dependency>
 
@@ -185,7 +199,7 @@
 			<plugin>
 				<groupId>pl.project13.maven</groupId>
 				<artifactId>git-commit-id-plugin</artifactId>
-				<version>4.0.0</version>
+				<version>4.9.10</version>
 				<executions>
 					<execution>
 						<goals>
