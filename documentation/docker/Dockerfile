@@ -1,4 +1,4 @@
-FROM swaggerapi/swagger-ui:v3.27.0
+FROM swaggerapi/swagger-ui:v4.12.0
 
 COPY /maven/*.yaml /usr/share/nginx/html/
 
@@ -17,4 +17,4 @@ RUN apk update && \
     chmod +x /kit/setServers.sh && \
     chmod +x /config.sh
 
-CMD ["sh", "/config.sh"]
+ENTRYPOINT ["sh", "/config.sh"]
