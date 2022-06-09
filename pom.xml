@@ -115,12 +115,26 @@
 				<version>3.0.0</version>
 			</dependency>
 
-			<!-- Swagger core -->
+			<!-- Swagger annotations -->
+			<dependency>
+				<groupId>io.swagger.core.v3</groupId>
+				<artifactId>swagger-annotations</artifactId>
+				<version>2.2.0</version>
+			</dependency>
+
 			<dependency>
 				<groupId>io.swagger</groupId>
 				<artifactId>swagger-annotations</artifactId>
-				<version>1.5.22</version>
+				<version>1.6.6</version>
 			</dependency>
+
+			<!-- javax ws rs -->
+			<dependency>
+				<groupId>javax.ws.rs</groupId>
+				<artifactId>javax.ws.rs-api</artifactId>
+				<version>2.1.1</version>
+			</dependency>
+
 
 			<!-- Test dependencies - test containers -->
 			<dependency>
