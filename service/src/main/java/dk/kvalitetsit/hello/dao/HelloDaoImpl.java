@@ -12,10 +12,10 @@ import java.util.List;
 
 public class HelloDaoImpl implements HelloDao {
     private static final Logger logger = LoggerFactory.getLogger(HelloDaoImpl.class);
-    private final DataSource dataSource;
+    private final NamedParameterJdbcTemplate template;
 
     public HelloDaoImpl(DataSource dataSource) {
-        this.dataSource = dataSource;
+        template = new NamedParameterJdbcTemplate(dataSource);
     }
 
     @Override
@@ -23,7 +23,6 @@ public class HelloDaoImpl implements HelloDao {
         logger.info("Inserting new entry in database.");
 
         var sql = "insert into hello_table(name) values(:name)";
-        NamedParameterJdbcTemplate template = new NamedParameterJdbcTemplate(dataSource);
 
         var parameterMap = new HashMap<String, Object>();
         parameterMap.put("name", helloEntity.getName());
@@ -35,7 +34,6 @@ public class HelloDaoImpl implements HelloDao {
     public List<HelloEntity> findAll() {
         var sql = "select * from hello_table";
 
-        NamedParameterJdbcTemplate template = new NamedParameterJdbcTemplate(dataSource);
         return template.query(sql, new BeanPropertyRowMapper<>(HelloEntity.class));
     }
 }
