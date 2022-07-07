@@ -41,11 +41,6 @@
 			<artifactId>spring-web</artifactId>
 		</dependency>
 
-		<dependency>
-			<groupId>io.springfox</groupId>
-			<artifactId>springfox-core</artifactId>
-		</dependency>
-
 		<!-- Test dependencies -->
 		<dependency>
 			<groupId>com.google.code.findbugs</groupId>

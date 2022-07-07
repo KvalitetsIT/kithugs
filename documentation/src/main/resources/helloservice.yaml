@@ -67,9 +67,12 @@ components:
           type: string
           example: "John Doe"
         now:
-          description: Time request was receved
+          description: Time request was received
           type: string
           format: date-time
+        i_can_be_null:
+          type: string
+          nullable: true
 
     helloRequest:
       type: object

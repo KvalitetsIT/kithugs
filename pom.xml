@@ -108,13 +108,6 @@
 				<version>0.2.2</version>
 			</dependency>
 
-			<!-- Springfox - used as part of API itnerface generation -->
-			<dependency>
-				<groupId>io.springfox</groupId>
-				<artifactId>springfox-core</artifactId>
-				<version>3.0.0</version>
-			</dependency>
-
 			<!-- Swagger annotations -->
 			<dependency>
 				<groupId>io.swagger.core.v3</groupId>

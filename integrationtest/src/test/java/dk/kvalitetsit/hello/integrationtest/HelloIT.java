@@ -6,8 +6,7 @@ import org.openapitools.client.ApiException;
 import org.openapitools.client.api.KithugsApi;
 import org.openapitools.client.model.HelloRequest;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 public class HelloIT extends AbstractIntegrationTest {
 
@@ -29,6 +28,7 @@ public class HelloIT extends AbstractIntegrationTest {
 
         assertNotNull(result);
         assertEquals(input.getName(), result.getName());
+        assertNull(result.getiCanBeNull());
         assertNotNull(result.getNow());
     }
 }
