@@ -14,15 +14,14 @@ public class HelloDaoTest extends AbstractDaoTest {
 
     @Test
     public void testByMessageId() {
-        var input = new HelloEntity();
-        input.setName(UUID.randomUUID().toString());
+        var input = HelloEntity.createInstance(UUID.randomUUID().toString());
 
         helloDao.insert(input);
 
         var result = helloDao.findAll();
         assertNotNull(result);
         assertEquals(1, result.size());
-        assertEquals(input.getName(), result.get(0).getName());
-        assertNotNull(result.get(0).getId());
+        assertEquals(input.name(), result.get(0).name());
+        assertNotNull(result.get(0).id());
     }
 }

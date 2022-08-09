@@ -33,12 +33,7 @@ public class HelloControllerTest {
         input.setName(UUID.randomUUID().toString());
 
         var expectedDate = ZonedDateTime.now();
-        Mockito.when(helloService.helloServiceBusinessLogic(Mockito.any())).then(a -> {
-            HelloServiceOutput output = new HelloServiceOutput();
-            output.setNow(expectedDate);
-            output.setName(a.getArgument(0, HelloServiceInput.class).getName());
-            return output;
-        });
+        Mockito.when(helloService.helloServiceBusinessLogic(Mockito.any())).then(a -> new HelloServiceOutput(a.getArgument(0, HelloServiceInput.class).name(), expectedDate));
 
         var result = helloController.v1HelloPost(input);
 
@@ -50,6 +45,6 @@ public class HelloControllerTest {
         Mockito.verify(helloService, times(1)).helloServiceBusinessLogic(inputArgumentCaptor.capture());
 
         assertNotNull(inputArgumentCaptor.getValue());
-        assertEquals(input.getName(), inputArgumentCaptor.getValue().getName());
+        assertEquals(input.getName(), inputArgumentCaptor.getValue().name());
     }
 }

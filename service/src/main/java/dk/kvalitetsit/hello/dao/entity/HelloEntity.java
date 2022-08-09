@@ -1,22 +1,7 @@
 package dk.kvalitetsit.hello.dao.entity;
 
-public class HelloEntity {
-    private Long id;
-    private String name;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+public record HelloEntity(Long id, String name) {
+    public static HelloEntity createInstance(String name) {
+        return new HelloEntity(null, name);
     }
 }
