@@ -3,7 +3,7 @@ package dk.kvalitetsit.hello.dao;
 import dk.kvalitetsit.hello.dao.entity.HelloEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.DataClassRowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
 import javax.sql.DataSource;
@@ -25,7 +25,7 @@ public class HelloDaoImpl implements HelloDao {
         var sql = "insert into hello_table(name) values(:name)";
 
         var parameterMap = new HashMap<String, Object>();
-        parameterMap.put("name", helloEntity.getName());
+        parameterMap.put("name", helloEntity.name());
 
         template.update(sql, parameterMap);
     }
@@ -34,6 +34,6 @@ public class HelloDaoImpl implements HelloDao {
     public List<HelloEntity> findAll() {
         var sql = "select * from hello_table";
 
-        return template.query(sql, new BeanPropertyRowMapper<>(HelloEntity.class));
+        return template.query(sql, new DataClassRowMapper<>(HelloEntity.class));
     }
 }
