@@ -95,12 +95,6 @@
             <groupId>com.squareup.okhttp3</groupId>
             <artifactId>logging-interceptor</artifactId>
             <version>4.10.0</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.squareup.okhttp3</groupId>
-                    <artifactId>okhttp</artifactId>
-                </exclusion>
-            </exclusions>
             <scope>test</scope>
         </dependency>
 
@@ -113,13 +107,6 @@
         <dependency>
             <groupId>com.squareup.okhttp3</groupId>
             <artifactId>okhttp</artifactId>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>com.squareup.okhttp3</groupId>
-            <artifactId>logging-interceptor</artifactId>
-            <version>4.10.0</version>
             <scope>test</scope>
         </dependency>
 
