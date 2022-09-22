@@ -25,11 +25,6 @@ if [[ -z $CORRELATION_ID ]]; then
   export CORRELATION_ID=x-request-id
 fi
 
-if [[ -z $SERVICE_ID ]]; then
-  echo "Default SERVICE_ID = kithugs"
-  export SERVICE_ID=kithugs
-fi
-
 JAR_FILE=web.jar
 
 echo "Starting service with the following command."
