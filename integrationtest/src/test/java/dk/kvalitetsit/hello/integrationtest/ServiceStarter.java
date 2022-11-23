@@ -1,7 +1,7 @@
 package dk.kvalitetsit.hello.integrationtest;
 
 import com.github.dockerjava.api.model.VolumesFrom;
-import dk.kvalitetsit.hello.VideoLinkHandlerApplication;
+import dk.kvalitetsit.hello.Application;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
@@ -32,10 +32,10 @@ public class ServiceStarter {
         System.setProperty("JDBC.USER", "hellouser");
         System.setProperty("JDBC.PASS", "secret1234");
 
-        SpringApplication.run((VideoLinkHandlerApplication.class));
+        SpringApplication.run(Application.class);
     }
 
-    public GenericContainer startServicesInDocker() {
+    public GenericContainer<?> startServicesInDocker() {
         dockerNetwork = Network.newNetwork();
 
         setupDatabaseContainer();
@@ -44,7 +44,7 @@ public class ServiceStarter {
         var resourcesRunning = containerRunning(resourcesContainerName);
         logger.info("Resource container is running: " + resourcesRunning);
 
-        GenericContainer service;
+        GenericContainer<?> service;
 
         // Start service
         if (resourcesRunning) {
@@ -91,7 +91,7 @@ public class ServiceStarter {
 
     private void setupDatabaseContainer() {
         // Database server for Organisation.
-        MariaDBContainer mariadb = (MariaDBContainer) new MariaDBContainer<>("mariadb:10.6")
+        MariaDBContainer<?> mariadb = new MariaDBContainer<>("mariadb:10.6")
                 .withDatabaseName("hellodb")
                 .withUsername("hellouser")
                 .withPassword("secret1234")
@@ -102,7 +102,7 @@ public class ServiceStarter {
         attachLogger(mariadbLogger, mariadb);
     }
 
-    private void attachLogger(Logger logger, GenericContainer container) {
+    private void attachLogger(Logger logger, GenericContainer<?> container) {
         ServiceStarter.logger.info("Attaching logger to container: " + container.getContainerInfo().getName());
         Slf4jLogConsumer logConsumer = new Slf4jLogConsumer(logger);
         container.followOutput(logConsumer);
