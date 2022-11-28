@@ -73,6 +73,11 @@
 			<scope>test</scope>
 		</dependency>
 
+		<dependency>
+			<groupId>javax.annotation</groupId>
+			<artifactId>javax.annotation-api</artifactId>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
@@ -182,6 +187,7 @@
 								<interfaceOnly>true</interfaceOnly>
 								<performBeanValidation>true</performBeanValidation>
 								<library>spring-cloud</library>
+								<useSpringBoot3>true</useSpringBoot3>
 							</configOptions>
 							<output>${project.build.directory}/generated-sources/openapi/main</output>
 							<generateApiDocumentation>false</generateApiDocumentation>

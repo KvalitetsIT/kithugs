@@ -83,3 +83,4 @@ components:
           description: Your name
           type: string
           example: "John Doe"
+          maxLength: 8
