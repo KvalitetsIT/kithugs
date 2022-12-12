@@ -1,5 +1,6 @@
 package dk.kvalitetsit.hello.integrationtest;
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.openapitools.client.ApiClient;
 import org.openapitools.client.ApiException;
@@ -30,5 +31,14 @@ public class HelloIT extends AbstractIntegrationTest {
         assertEquals(input.getName(), result.getName());
         assertNull(result.getiCanBeNull());
         assertNotNull(result.getNow());
+    }
+
+    @Test
+    public void testCallServiceNameTooLong() throws ApiException {
+        var input = new HelloRequest();
+        input.setName("John Doe Is Too Long");
+
+        var thrownException = Assert.assertThrows(ApiException.class, () -> helloApi.v1HelloPost(input));
+        assertEquals(400, thrownException.getCode());
     }
 }
