@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 if ! command -v tree &> /dev/null; then
-  echo "Command 'tree' is required."
+  echo "Command 'tree' not found. Please install tree."
   exit 1
 fi
 
