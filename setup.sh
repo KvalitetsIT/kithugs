@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+if ! command -v tree &> /dev/null; then
+  echo "Command 'tree' is required."
+  exit 1
+fi
+
 if [ -z $1 ]; then
   echo "Run setup.sh REPOSITORY_NAME"
   exit 1
