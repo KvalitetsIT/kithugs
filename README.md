@@ -46,13 +46,25 @@ and the service can be called through the Swagger UI.
 
 In the docker-compose setup is also an example on how to set custom endpoints for the Swagger documentation service.
 
+## Dependency updates
+
+Out of the box we use GitHub Actions as our CI/CD platform and that can also handle dependency updates. We utilize 
+GitHubs [Dependabot](https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuring-dependabot-version-updates) 
+to create PR's with dependency updates. Further we have a job that automatically approves and merges dependencies. By 
+default, it is only enabled in the template repository. You can enable this by removing ` && github.repository == 'KvalitetsIT/kithugs'`
+from [dependabot-auto-merge.yml](.github/workflows/dependabot-auto-merge.yml). Before enabling it please consider below. 
+
+- If no branch protection rule is configured dependency udpates that fails the automatic build and test will get merged. 
+- You will not have a chance to review the changes in the dependency updates before it gets merged.  
+- Enable auto-merge must be enabled in the repository.
+
 ## Configuration
 
-| Environment variable | Description | Required |
-|----------------------|-------------|---------- |
-| JDBC_URL | JDBC connection URL | Yes |
-| JDBC_USER | JDBC user          | Yes |
-| JDBC_PASS | JDBC password      | Yes |
-| LOG_LEVEL | Log Level for applikation  log. Defaults to INFO. | No |
-| LOG_LEVEL_FRAMEWORK | Log level for framework. Defaults to INFO. | No |
-| CORRELATION_ID | HTTP header to take correlation id from. Used to correlate log messages. Defaults to "x-request-id". | No
+| Environment variable | Description                                                                                          | Required |
+|----------------------|------------------------------------------------------------------------------------------------------|----------|
+| JDBC_URL             | JDBC connection URL                                                                                  | Yes      |
+| JDBC_USER            | JDBC user                                                                                            | Yes      |
+| JDBC_PASS            | JDBC password                                                                                        | Yes      |
+| LOG_LEVEL            | Log Level for applikation  log. Defaults to INFO.                                                    | No       |
+| LOG_LEVEL_FRAMEWORK  | Log level for framework. Defaults to INFO.                                                           | No       |
+| CORRELATION_ID       | HTTP header to take correlation id from. Used to correlate log messages. Defaults to "x-request-id". | No       |
