@@ -27,18 +27,20 @@ servers:
         default: 8080
 paths:
   /v1/hello:
-    post:
+    get:
       tags:
         - KITHUGS
+      parameters:
+        - name: name
+          in: query
+          required: true
+          description: Name. If name is "NOT_VALID" an validation error occurs.
+          schema:
+            type: string
+            maxLength: 10
+          example: 'John Doe'
       summary: Call the thugs service
       description: Post your name and get some hugs or meet some thugs.
-      requestBody:
-        description: Your name
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/helloRequest'
       responses:
         '200':
           description: Ok
@@ -46,15 +48,23 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/helloResponse'
+        '400':
+          $ref: '#/components/responses/400'
+
 
 components:
   responses:
     '400':
       description: "Bad Request. This could be because: * One of the required parameters/properties are missing or is empty <br> * Length of input is exceeding maximum length <br> (See a possible detailed error message in the in the response.)"
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/detailedError'
     '401':
       description: "Unauthorized. This could be because: <br> * The calling system has not been properly authenticated."
     '403':
       description: "Forbidden. This could be because: <br> * The requested information does not belong the organisation of the user <br> * The calling user does not have the required roles"
+
   schemas:
     helloResponse:
       type: object
@@ -74,13 +84,42 @@ components:
           type: string
           nullable: true
 
-    helloRequest:
+    detailedError:
+      allOf:
+        - $ref: '#/components/schemas/basicError'
+        - type: object
+          required:
+            - detailed_error
+            - detailed_error_code
+          properties:
+            detailed_error:
+              description: Detailed error text. This could be a text describing an validation error.
+              type: string
+            detailed_error_code:
+              description:
+              type: string
+              enum:
+                - 10
+                - 20
+
+    basicError:
       type: object
       required:
-        - name
+        - timestamp
+        - status
+        - error
+        - path
       properties:
-        name:
-          description: Your name
+        error:
+          description: Error message.
           type: string
-          example: "John Doe"
-          maxLength: 8
+        path:
+          description: Path
+          type: string
+        status:
+          description: HTTP status code
+          type: integer
+        timestamp:
+          description: Time of error
+          type: string
+          format: date-time
