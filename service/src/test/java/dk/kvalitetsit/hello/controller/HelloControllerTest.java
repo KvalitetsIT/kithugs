@@ -7,7 +7,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
-import org.openapitools.model.HelloRequest;
 
 import java.time.ZonedDateTime;
 import java.util.UUID;
@@ -29,22 +28,21 @@ public class HelloControllerTest {
 
     @Test
     public void testCallController() {
-        var input = new HelloRequest();
-        input.setName(UUID.randomUUID().toString());
+        var name = UUID.randomUUID().toString();
 
         var expectedDate = ZonedDateTime.now();
         Mockito.when(helloService.helloServiceBusinessLogic(Mockito.any())).then(a -> new HelloServiceOutput(a.getArgument(0, HelloServiceInput.class).name(), expectedDate));
 
-        var result = helloController.v1HelloPost(input);
+        var result = helloController.v1HelloGet(name);
 
         assertNotNull(result);
-        assertEquals(input.getName(), result.getBody().getName());
+        assertEquals(name, result.getBody().getName());
         assertEquals(expectedDate.toOffsetDateTime(), result.getBody().getNow());
 
         var inputArgumentCaptor = ArgumentCaptor.forClass(HelloServiceInput.class);
         Mockito.verify(helloService, times(1)).helloServiceBusinessLogic(inputArgumentCaptor.capture());
 
         assertNotNull(inputArgumentCaptor.getValue());
-        assertEquals(input.getName(), inputArgumentCaptor.getValue().name());
+        assertEquals(name, inputArgumentCaptor.getValue().name());
     }
 }

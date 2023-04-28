@@ -1,8 +1,10 @@
 package dk.kvalitetsit.hello.controller;
 
+import dk.kvalitetsit.hello.controller.exception.BadRequestException;
 import dk.kvalitetsit.hello.service.HelloService;
 import dk.kvalitetsit.hello.service.model.HelloServiceInput;
 import org.openapitools.api.KithugsApi;
+import org.openapitools.model.DetailedError;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -21,10 +23,15 @@ public class HelloController implements KithugsApi {
     }
 
     @Override
-    public ResponseEntity<org.openapitools.model.HelloResponse> v1HelloPost(org.openapitools.model.HelloRequest helloRequest) {
-        logger.debug("Enter POST hello.");
+    public ResponseEntity<org.openapitools.model.HelloResponse> v1HelloGet(String name) {
+        logger.debug("Enter GET hello.");
 
-        var serviceInput = new HelloServiceInput(helloRequest.getName());
+        // Just for demonstrating error response. Actual validation should most likely be somewhere else.
+        if(name.equalsIgnoreCase("NOT_VALID")) {
+            throw new BadRequestException(DetailedError.DetailedErrorCodeEnum._10, "%s is not a valid name.".formatted(name));
+        }
+
+        var serviceInput = new HelloServiceInput(name);
 
         var serviceResponse = helloService.helloServiceBusinessLogic(serviceInput);
 
