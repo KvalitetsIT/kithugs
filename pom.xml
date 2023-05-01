@@ -14,7 +14,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.0.5</version>
+		<version>3.0.6</version>
 	</parent>
 	<groupId>dk.kvalitetsit.kithugs</groupId>
 	<artifactId>kithugs</artifactId>
@@ -27,7 +27,7 @@
 		<testcontainers.version>1.18.0</testcontainers.version>
 		<spring-prometheus-app-info-version>2.0.2</spring-prometheus-app-info-version>
 		<spring-request-id-logger-version>2.0.0</spring-request-id-logger-version>
-		<jacoco-version>0.8.9</jacoco-version>
+		<jacoco-version>0.8.10</jacoco-version>
 	</properties>
 
 	<dependencies>
@@ -157,7 +157,7 @@
 			<dependency>
 				<groupId>com.squareup.okhttp3</groupId>
 				<artifactId>okhttp</artifactId>
-				<version>4.10.0</version>
+				<version>4.11.0</version>
 				<scope>test</scope>
 			</dependency>
 
