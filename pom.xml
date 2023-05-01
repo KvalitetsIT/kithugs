@@ -42,7 +42,7 @@
 		<testcontainers.version>1.18.0</testcontainers.version>
 		<spring-prometheus-app-info-version>2.0.0</spring-prometheus-app-info-version>
 		<spring-request-id-logger-version>2.0.0</spring-request-id-logger-version>
-		<jacoco-version>0.8.9</jacoco-version>
+		<jacoco-version>0.8.10</jacoco-version>
 	</properties>
 
 	<dependencies>
