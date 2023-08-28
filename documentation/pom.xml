@@ -188,6 +188,7 @@
 								<performBeanValidation>true</performBeanValidation>
 								<library>spring-cloud</library>
 								<useSpringBoot3>true</useSpringBoot3>
+								<useTags>true</useTags>
 							</configOptions>
 							<output>${project.build.directory}/generated-sources/openapi/main</output>
 							<generateApiDocumentation>false</generateApiDocumentation>
