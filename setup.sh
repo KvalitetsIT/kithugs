@@ -10,7 +10,7 @@ if [ -z $1 ]; then
   exit 1
 fi
 
-ignore_files=".git|setup.sh"
+ignore_files=".git|setup.sh|dependabot-auto-merge.yml"
 
 for input_file in `tree -I "${ignore_files}" -Ffai --noreport`
 do
