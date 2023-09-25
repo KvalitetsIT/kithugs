@@ -14,5 +14,5 @@ COPY /maven/web-exec.jar web.jar
 EXPOSE 8080
 EXPOSE 8081
 
-USER appuser
+USER 11001
 ENTRYPOINT ["/home/appuser/entrypoint.sh"]
