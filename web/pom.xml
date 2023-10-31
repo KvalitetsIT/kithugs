@@ -80,6 +80,16 @@
                                                 <source>${project.build.directory}/web-exec.jar</source>
                                             </file>
                                         </files>
+                                        <fileSets>
+                                            <fileSet>
+                                                <includes>
+                                                    <include>service-sbom.xml</include>
+                                                    <include>service-sbom.json</include>
+                                                </includes>
+                                                <directory>target/</directory>
+                                                <outputDirectory>/</outputDirectory>
+                                            </fileSet>
+                                        </fileSets>
                                     </inline>
                                     <descriptorRef>artifact</descriptorRef>
                                 </assembly>
