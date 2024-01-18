@@ -180,12 +180,6 @@
                         <configuration>
                             <fileSets>
                                 <fileSet implementation='org.apache.maven.shared.model.fileset.FileSet'>
-                                    <directory>/jacoco-report</directory>
-                                    <includes>
-                                        <include>**/*.exec</include>
-                                    </includes>
-                                </fileSet>
-                                <fileSet implementation='org.apache.maven.shared.model.fileset.FileSet'>
                                     <directory>/tmp</directory>
                                     <includes>
                                         <include>**/*.exec</include>

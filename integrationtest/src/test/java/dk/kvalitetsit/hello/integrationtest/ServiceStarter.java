@@ -1,6 +1,5 @@
 package dk.kvalitetsit.hello.integrationtest;
 
-import com.github.dockerjava.api.model.VolumesFrom;
 import dk.kvalitetsit.hello.Application;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,8 +19,9 @@ public class ServiceStarter {
     private static final Logger serviceLogger = LoggerFactory.getLogger("kithugs");
     private static final Logger mariadbLogger = LoggerFactory.getLogger("mariadb");
 
-    private Network dockerNetwork;
-    private String jdbcUrl;
+    private static Network dockerNetwork;
+    private static String jdbcUrl;
+    private static boolean firstStart = true;
 
     public void startServices() {
         dockerNetwork = Network.newNetwork();
@@ -36,27 +36,20 @@ public class ServiceStarter {
     }
 
     public GenericContainer<?> startServicesInDocker() {
-        dockerNetwork = Network.newNetwork();
+        if(firstStart) {
+            firstStart = false;
 
-        setupDatabaseContainer();
+            dockerNetwork = Network.newNetwork();
 
-        var resourcesContainerName = "kithugs-resources";
-        var resourcesRunning = containerRunning(resourcesContainerName);
-        logger.info("Resource container is running: " + resourcesRunning);
+            setupDatabaseContainer();
+        }
 
         GenericContainer<?> service;
 
         // Start service
-        if (resourcesRunning) {
-            VolumesFrom volumesFrom = new VolumesFrom(resourcesContainerName);
-            service = new GenericContainer<>("local/kithugs-qa:dev")
-                    .withCreateContainerCmdModifier(modifier -> modifier.withVolumesFrom(volumesFrom))
-                    .withEnv("JVM_OPTS", "-javaagent:/jacoco/jacocoagent.jar=output=file,destfile=/jacoco-report/jacoco-it.exec,dumponexit=true,append=true -cp integrationtest.jar");
-        } else {
-            service = new GenericContainer<>("local/kithugs-qa:dev")
-                    .withFileSystemBind("/tmp", "/jacoco-report/")
-                    .withEnv("JVM_OPTS", "-javaagent:/jacoco/jacocoagent.jar=output=file,destfile=/jacoco-report/jacoco-it.exec,dumponexit=true -cp integrationtest.jar");
-        }
+        service = new GenericContainer<>("local/kithugs-qa:dev")
+                .withFileSystemBind("/tmp", "/jacoco-output")
+                .withEnv("JVM_OPTS", "-javaagent:/jacoco/jacocoagent.jar=output=file,destfile=/jacoco-output/jacoco-it.exec,dumponexit=true -cp integrationtest.jar");
 
         service.withNetwork(dockerNetwork)
                 .withNetworkAliases("kithugs")
@@ -90,8 +83,8 @@ public class ServiceStarter {
     }
 
     private void setupDatabaseContainer() {
-        // Database server for Organisation.
-        MariaDBContainer<?> mariadb = new MariaDBContainer<>("mariadb:10.6")
+        // Database server.
+        var mariadb = new MariaDBContainer<>("mariadb:10.6")
                 .withDatabaseName("hellodb")
                 .withUsername("hellouser")
                 .withPassword("secret1234")
