@@ -1,5 +1,7 @@
 package dk.kvalitetsit.hello.integrationtest;
 
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testcontainers.containers.GenericContainer;
@@ -10,26 +12,17 @@ import java.net.URISyntaxException;
 public abstract class AbstractIntegrationTest {
     private static final Logger logger = LoggerFactory.getLogger(AbstractIntegrationTest.class);
 
-    private static GenericContainer helloService;
+    public static GenericContainer helloService;
     private static String apiBasePath;
 
-    static {
-        Runtime.getRuntime().addShutdownHook(new Thread()
-        {
-            public void run()
-            {
-                if(helloService != null) {
-                    logger.info("Stopping hello service container: " + helloService.getContainerId());
-                    helloService.getDockerClient().stopContainerCmd(helloService.getContainerId()).exec();
-                }
-            }
-        });
+    @AfterClass
+    public static void afterClass() {
+        helloService.getDockerClient().stopContainerCmd(helloService.getContainerId()).exec();
+    }
 
-        try {
-            setup();
-        } catch (IOException | URISyntaxException e) {
-            throw new RuntimeException(e);
-        }
+    @BeforeClass
+    public static void beforeClass() throws IOException, URISyntaxException {
+        setup();
     }
 
     private static void setup() throws IOException, URISyntaxException {
