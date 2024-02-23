@@ -17,7 +17,9 @@ public abstract class AbstractIntegrationTest {
 
     @AfterClass
     public static void afterClass() {
-        helloService.getDockerClient().stopContainerCmd(helloService.getContainerId()).exec();
+        if(helloService != null) {
+            helloService.getDockerClient().stopContainerCmd(helloService.getContainerId()).exec();
+        }
     }
 
     @BeforeClass
