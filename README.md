@@ -18,7 +18,7 @@ framework.
 8. Application log to stdout
 9. Set a user in the docker file (non-root)
 10. Readonly filesystem
-11. Use least capabilities
+11. Use least linux kernel capabilities
 
 Some of above recommendations are heavily inspired by [https://12factor.net/](https://12factor.net/). It is recommended 
 read [https://12factor.net/](https://12factor.net/) for more inspiration and further details. Some points go 
