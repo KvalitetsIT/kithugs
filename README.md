@@ -14,7 +14,11 @@ framework.
 4. Be stateless
 5. Support multiple instances
 6. Always be in a releasable state
-7. Automate build and deployment.
+7. Automate build and deployment
+8. Set a user in the docker file (non-root)
+9. Readonly filesystem
+10. Application log to stdout
+11. Use least capabilities
 
 Some of above recommendations are heavily inspired by [https://12factor.net/](https://12factor.net/). It is recommended 
 read [https://12factor.net/](https://12factor.net/) for more inspiration and further details. Some points go 
