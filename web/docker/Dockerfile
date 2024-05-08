@@ -1,6 +1,6 @@
 FROM ibm-semeru-runtimes:open-21-jre
 
-RUN apt-get update && apt-get upgrade && apt-get install -y tzdata
+RUN apt-get update && apt-get upgrade -y && apt-get install -y tzdata
 
 RUN groupadd --gid 11000 appuser && \
     useradd --gid 11000 --uid 11001 -m appuser
