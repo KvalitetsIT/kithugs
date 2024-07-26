@@ -3,31 +3,30 @@ package dk.kvalitetsit.hello.controller;
 import dk.kvalitetsit.hello.service.HelloService;
 import dk.kvalitetsit.hello.service.model.HelloServiceInput;
 import dk.kvalitetsit.hello.service.model.HelloServiceOutput;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.ZonedDateTime;
 import java.util.UUID;
 
-import static junit.framework.TestCase.assertNotNull;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.times;
 
+@ExtendWith(MockitoExtension.class)
 public class HelloControllerTest {
+    @InjectMocks
     private HelloController helloController;
+    @Mock
     private HelloService helloService;
 
-    @Before
-    public void setup() {
-        helloService = Mockito.mock(HelloService.class);
-
-        helloController = new HelloController(helloService);
-    }
-
     @Test
-    public void testCallController() {
+    void testCallController() {
         var name = UUID.randomUUID().toString();
 
         var expectedDate = ZonedDateTime.now();
@@ -36,6 +35,7 @@ public class HelloControllerTest {
         var result = helloController.v1HelloGet(name);
 
         assertNotNull(result);
+        assertNotNull(result.getBody());
         assertEquals(name, result.getBody().getName());
         assertEquals(expectedDate.toOffsetDateTime(), result.getBody().getNow());
 

@@ -30,14 +30,6 @@
 		<jacoco-version>0.8.12</jacoco-version>
 	</properties>
 
-	<dependencies>
-		<dependency>
-			<groupId>org.junit.vintage</groupId>
-			<artifactId>junit-vintage-engine</artifactId>
-			<scope>test</scope>
-		</dependency>
-	</dependencies>
-
 	<dependencyManagement>
 		<dependencies>
 			<!-- Modules in project -->

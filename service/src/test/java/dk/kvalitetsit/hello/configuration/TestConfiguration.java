@@ -1,7 +1,6 @@
 package dk.kvalitetsit.hello.configuration;
 
 import dk.kvalitetsit.hello.dao.HelloDao;
-import dk.kvalitetsit.hello.dao.HelloDaoImpl;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,6 +14,6 @@ public class TestConfiguration {
 
     @Bean
     public HelloDao helloDao(DataSource dataSource) {
-        return new HelloDaoImpl(dataSource);
+        return new HelloDao(dataSource);
     }
 }
