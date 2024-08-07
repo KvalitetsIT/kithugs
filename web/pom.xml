@@ -83,10 +83,9 @@
                                         <fileSets>
                                             <fileSet>
                                                 <includes>
-                                                    <include>service-sbom.xml</include>
-                                                    <include>service-sbom.json</include>
+                                                    <include>application.cdx.json</include>
                                                 </includes>
-                                                <directory>target/</directory>
+                                                <directory>target/classes/META-INF/sbom/</directory>
                                                 <outputDirectory>/</outputDirectory>
                                             </fileSet>
                                         </fileSets>

@@ -6,7 +6,7 @@ RUN groupadd --gid 11000 appuser && \
     useradd --gid 11000 --uid 11001 -m appuser
 
 WORKDIR /opt/kvalitetsit
-COPY /maven/service-sbom* ./
+COPY /maven/application.cdx.json ./
 
 WORKDIR /home/appuser
 COPY entrypoint.sh .
