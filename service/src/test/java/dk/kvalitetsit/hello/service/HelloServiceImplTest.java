@@ -12,9 +12,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @ExtendWith(MockitoExtension.class)
-class HelloServiceTest {
+class HelloServiceImplTest {
     @InjectMocks
-    private HelloService helloService;
+    private HelloServiceImpl helloService;
 
     @Test
     void testValidInput() {

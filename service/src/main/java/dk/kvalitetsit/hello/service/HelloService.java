@@ -1,15 +1,8 @@
 package dk.kvalitetsit.hello.service;
 
-import dk.kvalitetsit.hello.service.model.HelloServiceInput;
 import dk.kvalitetsit.hello.service.model.HelloServiceOutput;
-import org.springframework.stereotype.Service;
+import dk.kvalitetsit.hello.service.model.HelloServiceInput;
 
-import java.time.ZonedDateTime;
-
-@Service
-public class HelloService {
-
-    public HelloServiceOutput helloServiceBusinessLogic(HelloServiceInput input) {
-        return new HelloServiceOutput(input.name(), ZonedDateTime.now());
-    }
+public interface HelloService {
+    HelloServiceOutput helloServiceBusinessLogic(HelloServiceInput input);
 }
