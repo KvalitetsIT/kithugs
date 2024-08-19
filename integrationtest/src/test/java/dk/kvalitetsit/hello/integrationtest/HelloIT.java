@@ -34,10 +34,10 @@ class HelloIT extends AbstractIntegrationTest {
     }
 
     @Test
-    void testCallServiceNameTooLong() {
+    void testCallGetServiceNameTooLong() {
         var input = "John Doe Is Too Long";
 
-        var thrownException = Assert.assertThrows(ApiException.class, () -> helloApi.v1HelloGet(input));
+        var thrownException = assertThrows(ApiException.class, () -> helloApi.v1HelloGet(input));
         DetailedError detailedError = JSON.deserialize(thrownException.getResponseBody(), DetailedError.class);
         assertEquals("Bad Request", detailedError.getError());
         assertEquals("/v1/hello", detailedError.getPath());
@@ -48,10 +48,10 @@ class HelloIT extends AbstractIntegrationTest {
     }
 
     @Test
-    void testCallServiceNameValidationError() {
+    void testCallPostServiceNameTooLong() {
         var request = new HelloRequest().name("John Doe Is Too Long");
 
-        var thrownException = Assert.assertThrows(ApiException.class, () -> helloApi.v1HelloPost(request));
+        var thrownException = assertThrows(ApiException.class, () -> helloApi.v1HelloPost(request));
         DetailedError detailedError = JSON.deserialize(thrownException.getResponseBody(), DetailedError.class);
         assertEquals("Bad Request", detailedError.getError());
         assertEquals("/v1/hello", detailedError.getPath());
