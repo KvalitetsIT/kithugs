@@ -5,6 +5,7 @@ import dk.kvalitetsit.hello.service.HelloService;
 import dk.kvalitetsit.hello.service.model.HelloServiceInput;
 import org.openapitools.api.KithugsApi;
 import org.openapitools.model.DetailedError;
+import org.openapitools.model.HelloResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +24,7 @@ public class HelloController implements KithugsApi {
     }
 
     @Override
-    public ResponseEntity<org.openapitools.model.HelloResponse> v1HelloGet(String name) {
+    public ResponseEntity<HelloResponse> v1HelloGet(String name) {
         logger.debug("Enter GET hello.");
 
         // Just for demonstrating error response. Actual validation should most likely be somewhere else.
@@ -35,7 +36,7 @@ public class HelloController implements KithugsApi {
 
         var serviceResponse = helloService.helloServiceBusinessLogic(serviceInput);
 
-        var helloResponse = new org.openapitools.model.HelloResponse();
+        var helloResponse = new HelloResponse();
         helloResponse.setName(serviceResponse.name());
         helloResponse.setNow(serviceResponse.now().toOffsetDateTime());
 

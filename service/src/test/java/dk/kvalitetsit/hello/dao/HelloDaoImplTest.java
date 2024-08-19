@@ -1,14 +1,15 @@
 package dk.kvalitetsit.hello.dao;
 
 import dk.kvalitetsit.hello.dao.entity.HelloEntity;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.UUID;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-public class HelloDaoTest extends AbstractDaoTest {
+public class HelloDaoImplTest extends AbstractDaoTest {
     @Autowired
     private HelloDao helloDao;
 
