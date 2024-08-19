@@ -13,8 +13,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.UUID;
-
 @RestController
 // CORS - Consider if this is needed in your application. Only here to make Swagger UI work.
 @CrossOrigin(origins = "http://localhost")
@@ -33,10 +31,6 @@ public class HelloController implements KithugsApi {
         // Just for demonstrating error response. Actual validation should most likely be somewhere else.
         if(name.equalsIgnoreCase("NOT_VALID")) {
             throw new BadRequestException(DetailedError.DetailedErrorCodeEnum._10, "%s is not a valid name.".formatted(name));
-        }
-
-        if(name.equalsIgnoreCase("ERROR")) {
-            return ResponseEntity.ok(new HelloResponse().name(UUID.randomUUID().toString()));
         }
 
         var serviceInput = new HelloServiceInput(name);
