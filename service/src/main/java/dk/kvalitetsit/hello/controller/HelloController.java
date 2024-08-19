@@ -5,6 +5,7 @@ import dk.kvalitetsit.hello.service.HelloService;
 import dk.kvalitetsit.hello.service.model.HelloServiceInput;
 import org.openapitools.api.KithugsApi;
 import org.openapitools.model.DetailedError;
+import org.openapitools.model.HelloRequest;
 import org.openapitools.model.HelloResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,5 +42,10 @@ public class HelloController implements KithugsApi {
         helloResponse.setNow(serviceResponse.now().toOffsetDateTime());
 
         return ResponseEntity.ok(helloResponse);
+    }
+
+    @Override
+    public ResponseEntity<HelloResponse> v1HelloPost(HelloRequest request) {
+        throw new RuntimeException("Not implemented.");
     }
 }

@@ -50,7 +50,27 @@ paths:
                 $ref: '#/components/schemas/helloResponse'
         '400':
           $ref: '#/components/responses/400'
-
+    post:
+      tags:
+        - KITHUGS
+      requestBody:
+        description: Hello request body.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/helloRequest'
+      summary: API to test body validation.
+      description: Posting a name longer than 10 characters trigger an validation error.
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/helloResponse'
+        '400':
+          $ref: '#/components/responses/400'
 
 components:
   responses:
@@ -66,6 +86,17 @@ components:
       description: "Forbidden. This could be because: <br> * The requested information does not belong the organisation of the user <br> * The calling user does not have the required roles"
 
   schemas:
+    helloRequest:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          description: Your name
+          type: string
+          example: "John Doe"
+          maxLength: 10
+
     helloResponse:
       type: object
       required:
@@ -96,7 +127,10 @@ components:
               description: Detailed error text. This could be a text describing an validation error.
               type: string
             detailed_error_code:
-              description:
+              description: >-
+                Detailed error code. This could be a code describing an validation error.
+                * 10: Input validation error
+                * 20: Other error.
               type: string
               enum:
                 - 10
