@@ -41,7 +41,7 @@ class HelloIT extends AbstractIntegrationTest {
         DetailedError detailedError = JSON.deserialize(thrownException.getResponseBody(), DetailedError.class);
         assertEquals("Bad Request", detailedError.getError());
         assertEquals("/v1/hello", detailedError.getPath());
-        assertEquals("v1HelloGet.name: size must be between 0 and 10", detailedError.getDetailedError());
+        assertEquals("v1HelloGet.name: størrelse skal være mellem 0 og 10", detailedError.getDetailedError());
         assertEquals(DetailedError.DetailedErrorCodeEnum._10, detailedError.getDetailedErrorCode());
         assertNotNull(detailedError.getTimestamp());
         assertEquals(400, detailedError.getStatus().longValue());
@@ -55,7 +55,7 @@ class HelloIT extends AbstractIntegrationTest {
         DetailedError detailedError = JSON.deserialize(thrownException.getResponseBody(), DetailedError.class);
         assertEquals("Bad Request", detailedError.getError());
         assertEquals("/v1/hello", detailedError.getPath());
-        assertEquals("name: size must be between 0 and 10", detailedError.getDetailedError());
+        assertEquals("name: størrelse skal være mellem 0 og 10", detailedError.getDetailedError());
         assertEquals(DetailedError.DetailedErrorCodeEnum._10, detailedError.getDetailedErrorCode());
         assertNotNull(detailedError.getTimestamp());
         assertEquals(400, detailedError.getStatus().longValue());
