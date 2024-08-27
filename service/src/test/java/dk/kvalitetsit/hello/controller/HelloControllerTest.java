@@ -1,5 +1,6 @@
 package dk.kvalitetsit.hello.controller;
 
+import org.openapitools.model.HelloRequest;
 import dk.kvalitetsit.hello.service.HelloService;
 import dk.kvalitetsit.hello.service.model.HelloServiceInput;
 import dk.kvalitetsit.hello.service.model.HelloServiceOutput;
@@ -45,4 +46,30 @@ public class HelloControllerTest {
         assertNotNull(inputArgumentCaptor.getValue());
         assertEquals(name, inputArgumentCaptor.getValue().name());
     }
+
+    @Test
+    void testPostController() {
+        var name = UUID.randomUUID().toString();
+
+        var expectedDate = ZonedDateTime.now();
+        Mockito.when(helloService.helloServiceBusinessLogic(Mockito.any())).then(a -> new HelloServiceOutput(a.getArgument(0, HelloServiceInput.class).name(), expectedDate));
+        
+        // Prepare the HelloRequest object
+        HelloRequest request = new HelloRequest();
+        request.setName(name);
+
+        var result = helloController.v1HelloPost(request);
+
+        assertNotNull(result);
+        assertNotNull(result.getBody());
+        assertEquals(name, result.getBody().getName());
+        assertEquals(expectedDate.toOffsetDateTime(), result.getBody().getNow());
+
+        var inputArgumentCaptor = ArgumentCaptor.forClass(HelloServiceInput.class);
+        Mockito.verify(helloService, times(1)).helloServiceBusinessLogic(inputArgumentCaptor.capture());
+
+        assertNotNull(inputArgumentCaptor.getValue());
+        assertEquals(name, inputArgumentCaptor.getValue().name());
+    }
+
 }

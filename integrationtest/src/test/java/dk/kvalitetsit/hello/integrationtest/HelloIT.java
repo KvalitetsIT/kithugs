@@ -34,6 +34,19 @@ class HelloIT extends AbstractIntegrationTest {
     }
 
     @Test
+    void testCallPostService() throws ApiException {
+        var input = "John Dow";
+
+        var request = new HelloRequest().name(input);
+
+        var postResult = helloApi.v1HelloPost(request);
+        assertNotNull(postResult);
+        assertEquals(input, postResult.getName());
+        assertNull(postResult.getiCanBeNull());
+        assertNotNull(postResult.getNow());
+    }
+
+    @Test
     void testCallGetServiceNameTooLong() {
         var input = "John Doe Is Too Long";
 
