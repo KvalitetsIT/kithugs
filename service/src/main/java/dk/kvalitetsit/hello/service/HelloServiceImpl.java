@@ -14,7 +14,7 @@ public class HelloServiceImpl implements HelloService {
 
     public HelloServiceImpl(HelloDao helloDao) {
         this.helloDao = helloDao;
-    }
+    }   
 
     @Override
     public HelloServiceOutput helloServiceBusinessLogic(HelloServiceInput input) {

@@ -46,6 +46,22 @@ public class HelloController implements KithugsApi {
 
     @Override
     public ResponseEntity<HelloResponse> v1HelloPost(HelloRequest request) {
-        throw new RuntimeException("Not implemented.");
+        logger.debug("Enter POST hello with request: {}", request);
+
+        // Validate the request
+        if (request == null || request.getName() == null || request.getName().isEmpty()) {
+            throw new BadRequestException(DetailedError.DetailedErrorCodeEnum._10, "Name cannot be null or empty.");
+        }
+
+        var serviceInput = new HelloServiceInput(request.getName());
+
+        var serviceResponse = helloService.helloServiceBusinessLogic(serviceInput);
+
+        var helloResponse = new HelloResponse();
+        
+        helloResponse.setName(serviceResponse.name());
+        helloResponse.setNow(serviceResponse.now().toOffsetDateTime());
+
+        return ResponseEntity.ok(helloResponse);
     }
 }
