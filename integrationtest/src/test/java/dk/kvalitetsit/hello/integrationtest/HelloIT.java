@@ -37,7 +37,7 @@ class HelloIT extends AbstractIntegrationTest {
 
     @Test
     void testCallPostService() throws ApiException {
-        var input = "John Dow3";
+        var input = "John Dow";
 
         var request = new HelloRequest().name(input);
 
@@ -46,6 +46,43 @@ class HelloIT extends AbstractIntegrationTest {
         assertEquals(input, postResult.getName());
         assertNull(postResult.getiCanBeNull());
         assertNotNull(postResult.getNow());
+    }
+
+    @Test
+    void testCallPostAndGetService() throws ApiException {
+        var input = "Bob Dow";
+        //Get all db entries
+        var result = helloApi.v1HelloGet(input);
+
+        //Assert input is not in db entries
+        assertNotNull(result);
+        boolean containsInput = result.stream()
+            .anyMatch(dbEntry -> input.equals(dbEntry.getName()));
+        assert(!containsInput);
+        int resultLengthBeforePost = result.size();
+
+        //Post input to db
+        var request = new HelloRequest().name(input);
+
+        //Assert post was successful
+        var postResult = helloApi.v1HelloPost(request);
+        assertNotNull(postResult);
+        assertEquals(input, postResult.getName());
+        assertNull(postResult.getiCanBeNull());
+        assertNotNull(postResult.getNow());
+
+        //Get all db entries again
+        var resultAfterPost = helloApi.v1HelloGet(input);
+
+        //Assert input is in db entries now
+        assertNotNull(resultAfterPost);
+        boolean containsInputAfterPost = resultAfterPost.stream()
+            .anyMatch(dbEntry -> input.equals(dbEntry.getName()));
+        assert(containsInputAfterPost);
+
+        //Assert number of db entries increased by exactly 1
+        int resultLengthAfterPost = resultAfterPost.size();
+        assertEquals(resultLengthBeforePost, resultLengthAfterPost - 1);
     }
 
     @Test
