@@ -61,7 +61,7 @@ public class HelloController implements KithugsApi {
 
         var serviceInput = new HelloServiceInput(request.getName());
 
-        var serviceResponse = helloService.helloServiceBusinessLogic(serviceInput);
+        var serviceResponse = helloService.helloServicePost(serviceInput);
 
         var helloResponse = new HelloResponse();
         

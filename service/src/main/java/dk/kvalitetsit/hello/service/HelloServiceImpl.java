@@ -20,13 +20,6 @@ public class HelloServiceImpl implements HelloService {
     }   
 
     @Override
-    public HelloServiceOutput helloServiceBusinessLogic(HelloServiceInput input) {
-        var helloEntity = HelloEntity.createInstance(input.name());
-        helloDao.insert(helloEntity);
-
-        return new HelloServiceOutput(helloEntity.name(), ZonedDateTime.now());
-    }
-
     public List<HelloServiceOutput> helloServiceGetAll() {
         var dbEntries = helloDao.findAll();
         var result = dbEntries.stream()
@@ -36,6 +29,7 @@ public class HelloServiceImpl implements HelloService {
         return result;
     }
 
+    @Override
     public HelloServiceOutput helloServicePost(HelloServiceInput input) {
         var helloEntity = HelloEntity.createInstance(input.name());
         helloDao.insert(helloEntity);

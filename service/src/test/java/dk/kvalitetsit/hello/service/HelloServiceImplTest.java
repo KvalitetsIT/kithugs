@@ -27,7 +27,7 @@ class HelloServiceImplTest {
         var input = new HelloServiceInput(UUID.randomUUID().toString());
         Mockito.doNothing().when(helloDao).insert(Mockito.any(HelloEntity.class));
 
-        var result = helloService.helloServiceBusinessLogic(input);
+        var result = helloService.helloServicePost(input);
         assertNotNull(result);
         assertNotNull(result.now());
         assertEquals(input.name(), result.name());

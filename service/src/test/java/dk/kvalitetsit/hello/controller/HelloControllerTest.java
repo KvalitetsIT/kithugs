@@ -55,7 +55,7 @@ public class HelloControllerTest {
         var name = UUID.randomUUID().toString();
 
         var expectedDate = ZonedDateTime.now();
-        Mockito.when(helloService.helloServiceBusinessLogic(Mockito.any())).then(a -> new HelloServiceOutput(a.getArgument(0, HelloServiceInput.class).name(), expectedDate));
+        Mockito.when(helloService.helloServicePost(Mockito.any())).then(a -> new HelloServiceOutput(a.getArgument(0, HelloServiceInput.class).name(), expectedDate));
         
         // Prepare the HelloRequest object
         HelloRequest request = new HelloRequest();
@@ -69,7 +69,7 @@ public class HelloControllerTest {
         assertEquals(expectedDate.toOffsetDateTime(), result.getBody().getNow());
 
         var inputArgumentCaptor = ArgumentCaptor.forClass(HelloServiceInput.class);
-        Mockito.verify(helloService, times(1)).helloServiceBusinessLogic(inputArgumentCaptor.capture());
+        Mockito.verify(helloService, times(1)).helloServicePost(inputArgumentCaptor.capture());
 
         assertNotNull(inputArgumentCaptor.getValue());
         assertEquals(name, inputArgumentCaptor.getValue().name());

@@ -7,7 +7,6 @@ import dk.kvalitetsit.hello.dao.entity.HelloEntity;
 import java.util.List;
 
 public interface HelloService {
-    HelloServiceOutput helloServiceBusinessLogic(HelloServiceInput input);
     HelloServiceOutput helloServicePost(HelloServiceInput input);
     List<HelloServiceOutput> helloServiceGetAll();
 }
