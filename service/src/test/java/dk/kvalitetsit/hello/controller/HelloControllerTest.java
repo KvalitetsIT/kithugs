@@ -14,6 +14,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.ZonedDateTime;
 import java.util.UUID;
+import java.util.List;
+import java.util.ArrayList;
+
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -31,20 +34,20 @@ public class HelloControllerTest {
         var name = UUID.randomUUID().toString();
 
         var expectedDate = ZonedDateTime.now();
-        Mockito.when(helloService.helloServiceBusinessLogic(Mockito.any())).then(a -> new HelloServiceOutput(a.getArgument(0, HelloServiceInput.class).name(), expectedDate));
+
+        List<HelloServiceOutput> mockServiceResponseList = new ArrayList<>();
+        mockServiceResponseList.add(new HelloServiceOutput(name, expectedDate));
+
+        Mockito.when(helloService.helloServiceGetAll()).thenReturn(mockServiceResponseList);
 
         var result = helloController.v1HelloGet(name);
 
         assertNotNull(result);
         assertNotNull(result.getBody());
-        assertEquals(name, result.getBody().getName());
-        assertEquals(expectedDate.toOffsetDateTime(), result.getBody().getNow());
+        assertEquals(name, result.getBody().get(0).getName());
+        assertEquals(expectedDate.toOffsetDateTime(), result.getBody().get(0).getNow());
 
-        var inputArgumentCaptor = ArgumentCaptor.forClass(HelloServiceInput.class);
-        Mockito.verify(helloService, times(1)).helloServiceBusinessLogic(inputArgumentCaptor.capture());
-
-        assertNotNull(inputArgumentCaptor.getValue());
-        assertEquals(name, inputArgumentCaptor.getValue().name());
+        Mockito.verify(helloService, times(1)).helloServiceGetAll();
     }
 
     @Test

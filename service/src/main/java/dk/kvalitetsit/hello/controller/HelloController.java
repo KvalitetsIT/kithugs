@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
+import java.util.List;
 
 @RestController
 // CORS - Consider if this is needed in your application. Only here to make Swagger UI work.
@@ -25,7 +26,7 @@ public class HelloController implements KithugsApi {
     }
 
     @Override
-    public ResponseEntity<HelloResponse> v1HelloGet(String name) {
+    public ResponseEntity<List<HelloResponse>> v1HelloGet(String name) {
         logger.debug("Enter GET hello.");
 
         // Just for demonstrating error response. Actual validation should most likely be somewhere else.
@@ -35,13 +36,18 @@ public class HelloController implements KithugsApi {
 
         var serviceInput = new HelloServiceInput(name);
 
-        var serviceResponse = helloService.helloServiceBusinessLogic(serviceInput);
+        var serviceResponseList = helloService.helloServiceGetAll();
 
-        var helloResponse = new HelloResponse();
-        helloResponse.setName(serviceResponse.name());
-        helloResponse.setNow(serviceResponse.now().toOffsetDateTime());
+        List<HelloResponse> helloResponseList = serviceResponseList.stream()
+            .map(serviceResponse -> {
+                HelloResponse helloResponse = new HelloResponse();
+                helloResponse.setName(serviceResponse.name());
+                helloResponse.setNow(serviceResponse.now().toOffsetDateTime());
+                return helloResponse;
+            })
+            .toList();
 
-        return ResponseEntity.ok(helloResponse);
+        return ResponseEntity.ok(helloResponseList);
     }
 
     @Override

@@ -47,7 +47,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/helloResponse'
+                $ref: '#/components/schemas/helloResponseList'
         '400':
           $ref: '#/components/responses/400'
     post:
@@ -114,6 +114,12 @@ components:
         i_can_be_null:
           type: string
           nullable: true
+
+    helloResponseList:
+      type: array
+      description: List of hello responses
+      items:
+        $ref: '#/components/schemas/helloResponse'
 
     detailedError:
       allOf:

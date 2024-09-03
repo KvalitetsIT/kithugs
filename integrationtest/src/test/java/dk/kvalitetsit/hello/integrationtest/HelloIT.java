@@ -23,19 +23,21 @@ class HelloIT extends AbstractIntegrationTest {
 
     @Test
     void testCallService() throws ApiException {
-        var input = "John Dow";
+        //in V901__extra_data_for_integration_test.sql the name "Some Name" is set to be inserted into the db.
+        //here we test that we can get that name from the db.
+        var input = "Some Name";
 
         var result = helloApi.v1HelloGet(input);
 
         assertNotNull(result);
-        assertEquals(input, result.getName());
-        assertNull(result.getiCanBeNull());
-        assertNotNull(result.getNow());
+        boolean containsSomeName = result.stream()
+            .anyMatch(dbEntry -> "Some Name".equals(dbEntry.getName()));
+        assert(containsSomeName);
     }
 
     @Test
     void testCallPostService() throws ApiException {
-        var input = "John Dow";
+        var input = "John Dow3";
 
         var request = new HelloRequest().name(input);
 
