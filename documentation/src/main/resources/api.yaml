@@ -39,8 +39,8 @@ paths:
             type: string
             maxLength: 10
           example: 'John Doe'
-      summary: Call the thugs service
-      description: Post your name and get some hugs or meet some thugs.
+      summary: Get name.
+      description: Post a name and get all instances of the name in the db. Post without a name to get everything that's in the db.
       responses:
         '200':
           description: Ok
@@ -62,7 +62,7 @@ paths:
             type: string
             maxLength: 10
           example: 'John Doe'
-      summary: API to test post.
+      summary: Post name to db.
       description: Posting a name longer than 10 characters trigger an validation error.
       responses:
         '200':
@@ -88,17 +88,6 @@ components:
       description: "Forbidden. This could be because: <br> * The requested information does not belong the organisation of the user <br> * The calling user does not have the required roles"
 
   schemas:
-    helloRequest:
-      type: object
-      required:
-        - name
-      properties:
-        name:
-          description: Your name
-          type: string
-          example: "John Doe"
-          maxLength: 10
-
     helloResponse:
       type: object
       required:
