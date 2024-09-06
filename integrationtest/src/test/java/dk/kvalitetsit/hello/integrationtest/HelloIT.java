@@ -22,7 +22,7 @@ class HelloIT extends AbstractIntegrationTest {
     }
 
     @Test
-    void testCallService() throws ApiException {
+    void testCallServiceWithName() throws ApiException {
         //in V901__extra_data_for_integration_test.sql the name "Some Name" is set to be inserted into the db.
         //here we test that we can get that name from the db.
         var input = "Some Name";
@@ -30,6 +30,33 @@ class HelloIT extends AbstractIntegrationTest {
         var result = helloApi.v1HelloGet(input);
 
         assertNotNull(result);
+        assertEquals(1, result.size());
+        boolean containsSomeName = result.stream()
+            .anyMatch(dbEntry -> "Some Name".equals(dbEntry.getName()));
+        assert(containsSomeName);
+    }
+
+    @Test
+    void testCallServiceWithNameNotInDB() throws ApiException {
+        //Test that calling the get method with a name that is not in the db returns an empty list
+        var input = "notindb";
+
+        var result = helloApi.v1HelloGet(input);
+
+        assertNotNull(result);
+        assertEquals(0, result.size());
+    }
+
+    @Test
+    void testCallServiceWithoutName() throws ApiException {
+        //in V901__extra_data_for_integration_test.sql the name "Some Name" is set to be inserted into the db.
+        //here we test that that is the only name we get from the db when we try to get everything from the db
+        String input = null;
+        
+        var result = helloApi.v1HelloGet(input);
+
+        assertNotNull(result);
+        assertEquals(1, result.size());
         boolean containsSomeName = result.stream()
             .anyMatch(dbEntry -> "Some Name".equals(dbEntry.getName()));
         assert(containsSomeName);
@@ -50,7 +77,7 @@ class HelloIT extends AbstractIntegrationTest {
     void testCallPostAndGetService() throws ApiException {
         var input = "Bob Dow";
         //Get all db entries
-        var result = helloApi.v1HelloGet(input);
+        var result = helloApi.v1HelloGet(null);
 
         //Assert input is not in db entries
         assertNotNull(result);
@@ -60,17 +87,16 @@ class HelloIT extends AbstractIntegrationTest {
         int resultLengthBeforePost = result.size();
 
         //Post input to db
-        var request = new HelloRequest().name(input);
+        var postResult = helloApi.v1HelloPost(input);
 
         //Assert post was successful
-        var postResult = helloApi.v1HelloPost(input);
         assertNotNull(postResult);
         assertEquals(input, postResult.getName());
         assertNull(postResult.getiCanBeNull());
         assertNotNull(postResult.getNow());
 
         //Get all db entries again
-        var resultAfterPost = helloApi.v1HelloGet(input);
+        var resultAfterPost = helloApi.v1HelloGet(null);
 
         //Assert input is in db entries now
         assertNotNull(resultAfterPost);
