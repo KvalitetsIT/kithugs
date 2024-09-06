@@ -3,6 +3,8 @@ package dk.kvalitetsit.hello.controller;
 import dk.kvalitetsit.hello.controller.exception.BadRequestException;
 import dk.kvalitetsit.hello.service.HelloService;
 import dk.kvalitetsit.hello.service.model.HelloServiceInput;
+import dk.kvalitetsit.hello.service.model.HelloServiceOutput;
+
 import org.openapitools.api.KithugsApi;
 import org.openapitools.model.DetailedError;
 import org.openapitools.model.HelloRequest;
@@ -29,14 +31,21 @@ public class HelloController implements KithugsApi {
     public ResponseEntity<List<HelloResponse>> v1HelloGet(String name) {
         logger.debug("Enter GET hello.");
 
-        // Just for demonstrating error response. Actual validation should most likely be somewhere else.
-        if(name.equalsIgnoreCase("NOT_VALID")) {
-            throw new BadRequestException(DetailedError.DetailedErrorCodeEnum._10, "%s is not a valid name.".formatted(name));
+        List <HelloServiceOutput> serviceResponseList;
+
+        if (name == null) {
+            serviceResponseList = helloService.helloServiceGetAll();
+
         }
+        else {
+            // Just for demonstrating error response. Actual validation should most likely be somewhere else.
+            if(name.equalsIgnoreCase("NOT_VALID")) {
+                throw new BadRequestException(DetailedError.DetailedErrorCodeEnum._10, "%s is not a valid name.".formatted(name));
+            }
+            var serviceInput = new HelloServiceInput(name);
 
-        var serviceInput = new HelloServiceInput(name);
-
-        var serviceResponseList = helloService.helloServiceGetAll();
+            serviceResponseList = helloService.helloServiceGetOne(serviceInput);
+        }
 
         List<HelloResponse> helloResponseList = serviceResponseList.stream()
             .map(serviceResponse -> {

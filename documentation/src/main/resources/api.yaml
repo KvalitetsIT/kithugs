@@ -33,7 +33,7 @@ paths:
       parameters:
         - name: name
           in: query
-          required: true
+          required: false
           description: Name. If name is "NOT_VALID" an validation error occurs.
           schema:
             type: string

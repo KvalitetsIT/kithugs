@@ -30,18 +30,41 @@ public class HelloControllerTest {
     private HelloService helloService;
 
     @Test
-    void testCallController() {
+    void testCallControllerWithName() {
+        //Test that when our get method is called with a name parameter, only the instances in the db with that name get returned
+        //Arrange
         var name = UUID.randomUUID().toString();
-
         var expectedDate = ZonedDateTime.now();
-
         List<HelloServiceOutput> mockServiceResponseList = new ArrayList<>();
         mockServiceResponseList.add(new HelloServiceOutput(name, expectedDate));
+        Mockito.when(helloService.helloServiceGetOne(Mockito.any(HelloServiceInput.class))).thenReturn(mockServiceResponseList);
 
-        Mockito.when(helloService.helloServiceGetAll()).thenReturn(mockServiceResponseList);
-
+        //Act
         var result = helloController.v1HelloGet(name);
 
+        //Assert
+        assertNotNull(result);
+        assertNotNull(result.getBody());
+        assertEquals(name, result.getBody().get(0).getName());
+        assertEquals(expectedDate.toOffsetDateTime(), result.getBody().get(0).getNow());
+
+        Mockito.verify(helloService, times(1)).helloServiceGetOne(Mockito.any(HelloServiceInput.class));
+    }
+
+    @Test
+    void testCallControllerWithoutName() {
+        //Assert that when our get method is called without a name parameter, the entire db contents get returned
+        //Arrange
+        var name = UUID.randomUUID().toString();
+        var expectedDate = ZonedDateTime.now();
+        List<HelloServiceOutput> mockServiceResponseList = new ArrayList<>();
+        mockServiceResponseList.add(new HelloServiceOutput(name, expectedDate));
+        Mockito.when(helloService.helloServiceGetAll()).thenReturn(mockServiceResponseList);
+
+        //Act
+        var result = helloController.v1HelloGet(null);
+
+        //Assert
         assertNotNull(result);
         assertNotNull(result.getBody());
         assertEquals(name, result.getBody().get(0).getName());

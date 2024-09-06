@@ -30,6 +30,17 @@ public class HelloServiceImpl implements HelloService {
     }
 
     @Override
+    public List<HelloServiceOutput> helloServiceGetOne(HelloServiceInput input) {
+        var helloEntity = HelloEntity.createInstance(input.name());
+        var dbEntries = helloDao.findOne(helloEntity);
+        var result = dbEntries.stream()
+            .map(dbEntry -> new HelloServiceOutput(dbEntry.name(), ZonedDateTime.now()))
+            .collect(Collectors.toList());
+        return result;
+    }
+
+
+    @Override
     public HelloServiceOutput helloServicePost(HelloServiceInput input) {
         var helloEntity = HelloEntity.createInstance(input.name());
         helloDao.insert(helloEntity);
