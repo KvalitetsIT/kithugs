@@ -53,14 +53,16 @@ paths:
     post:
       tags:
         - KITHUGS
-      requestBody:
-        description: Hello request body.
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/helloRequest'
-      summary: API to test body validation.
+      parameters:
+        - name: name
+          in: query
+          required: true
+          description: Name.
+          schema:
+            type: string
+            maxLength: 10
+          example: 'John Doe'
+      summary: API to test post.
       description: Posting a name longer than 10 characters trigger an validation error.
       responses:
         '200':

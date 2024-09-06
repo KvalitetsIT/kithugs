@@ -51,15 +51,15 @@ public class HelloController implements KithugsApi {
     }
 
     @Override
-    public ResponseEntity<HelloResponse> v1HelloPost(HelloRequest request) {
-        logger.debug("Enter POST hello with request: {}", request);
+    public ResponseEntity<HelloResponse> v1HelloPost(String name) {
+        logger.debug("Enter POST hello with name: {}", name);
 
         // Validate the request
-        if (request == null || request.getName() == null || request.getName().isEmpty()) {
+        if (name == null || name == "") {
             throw new BadRequestException(DetailedError.DetailedErrorCodeEnum._10, "Name cannot be null or empty.");
         }
 
-        var serviceInput = new HelloServiceInput(request.getName());
+        var serviceInput = new HelloServiceInput(name);
 
         var serviceResponse = helloService.helloServicePost(serviceInput);
 

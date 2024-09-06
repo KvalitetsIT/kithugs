@@ -57,11 +57,7 @@ public class HelloControllerTest {
         var expectedDate = ZonedDateTime.now();
         Mockito.when(helloService.helloServicePost(Mockito.any())).then(a -> new HelloServiceOutput(a.getArgument(0, HelloServiceInput.class).name(), expectedDate));
         
-        // Prepare the HelloRequest object
-        HelloRequest request = new HelloRequest();
-        request.setName(name);
-
-        var result = helloController.v1HelloPost(request);
+        var result = helloController.v1HelloPost(name);
 
         assertNotNull(result);
         assertNotNull(result.getBody());

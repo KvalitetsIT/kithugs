@@ -39,9 +39,7 @@ class HelloIT extends AbstractIntegrationTest {
     void testCallPostService() throws ApiException {
         var input = "John Dow";
 
-        var request = new HelloRequest().name(input);
-
-        var postResult = helloApi.v1HelloPost(request);
+        var postResult = helloApi.v1HelloPost(input);
         assertNotNull(postResult);
         assertEquals(input, postResult.getName());
         assertNull(postResult.getiCanBeNull());
@@ -65,7 +63,7 @@ class HelloIT extends AbstractIntegrationTest {
         var request = new HelloRequest().name(input);
 
         //Assert post was successful
-        var postResult = helloApi.v1HelloPost(request);
+        var postResult = helloApi.v1HelloPost(input);
         assertNotNull(postResult);
         assertEquals(input, postResult.getName());
         assertNull(postResult.getiCanBeNull());
@@ -101,13 +99,11 @@ class HelloIT extends AbstractIntegrationTest {
 
     @Test
     void testCallPostServiceNameTooLong() {
-        var request = new HelloRequest().name("John Doe Is Too Long");
-
-        var thrownException = assertThrows(ApiException.class, () -> helloApi.v1HelloPost(request));
+        var thrownException = assertThrows(ApiException.class, () -> helloApi.v1HelloPost("John Doe Is Too Long"));
         DetailedError detailedError = JSON.deserialize(thrownException.getResponseBody(), DetailedError.class);
         assertEquals("Bad Request", detailedError.getError());
         assertEquals("/v1/hello", detailedError.getPath());
-        assertEquals("name: størrelse skal være mellem 0 og 10", detailedError.getDetailedError());
+        assertEquals("v1HelloPost.name: størrelse skal være mellem 0 og 10", detailedError.getDetailedError());
         assertEquals(DetailedError.DetailedErrorCodeEnum._10, detailedError.getDetailedErrorCode());
         assertNotNull(detailedError.getTimestamp());
         assertEquals(400, detailedError.getStatus().longValue());
