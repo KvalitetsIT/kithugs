@@ -88,6 +88,16 @@ components:
       description: "Forbidden. This could be because: <br> * The requested information does not belong the organisation of the user <br> * The calling user does not have the required roles"
 
   schemas:
+    helloRequest:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          description: Your name
+          type: string
+          example: "John Doe"
+          maxLength: 10
     helloResponse:
       type: object
       required:
