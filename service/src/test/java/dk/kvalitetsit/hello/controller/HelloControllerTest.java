@@ -37,7 +37,7 @@ public class HelloControllerTest {
         var expectedDate = ZonedDateTime.now();
         List<HelloServiceOutput> mockServiceResponseList = new ArrayList<>();
         mockServiceResponseList.add(new HelloServiceOutput(name, expectedDate));
-        Mockito.when(helloService.helloServiceGetOne(Mockito.any(HelloServiceInput.class))).thenReturn(mockServiceResponseList);
+        Mockito.when(helloService.helloServiceGetByName(Mockito.any(HelloServiceInput.class))).thenReturn(mockServiceResponseList);
 
         //Act
         var result = helloController.v1HelloGet(name);
@@ -48,7 +48,7 @@ public class HelloControllerTest {
         assertEquals(name, result.getBody().get(0).getName());
         assertEquals(expectedDate.toOffsetDateTime(), result.getBody().get(0).getNow());
 
-        Mockito.verify(helloService, times(1)).helloServiceGetOne(Mockito.any(HelloServiceInput.class));
+        Mockito.verify(helloService, times(1)).helloServiceGetByName(Mockito.any(HelloServiceInput.class));
     }
 
     @Test
@@ -76,11 +76,12 @@ public class HelloControllerTest {
     @Test
     void testPostController() {
         var name = UUID.randomUUID().toString();
+        var request = new HelloRequest().name(name);
 
         var expectedDate = ZonedDateTime.now();
         Mockito.when(helloService.helloServicePost(Mockito.any())).then(a -> new HelloServiceOutput(a.getArgument(0, HelloServiceInput.class).name(), expectedDate));
         
-        var result = helloController.v1HelloPost(name);
+        var result = helloController.v1HelloPost(request);
 
         assertNotNull(result);
         assertNotNull(result.getBody());

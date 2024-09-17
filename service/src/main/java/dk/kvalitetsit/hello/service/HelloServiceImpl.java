@@ -30,7 +30,7 @@ public class HelloServiceImpl implements HelloService {
     }
 
     @Override
-    public List<HelloServiceOutput> helloServiceGetOne(HelloServiceInput input) {
+    public List<HelloServiceOutput> helloServiceGetByName(HelloServiceInput input) {
         var name = input.name();
         var dbEntries = helloDao.findByName(name);
         var result = dbEntries.stream()

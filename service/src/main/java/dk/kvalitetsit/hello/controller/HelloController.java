@@ -44,7 +44,7 @@ public class HelloController implements KithugsApi {
             }
             var serviceInput = new HelloServiceInput(name);
 
-            serviceResponseList = helloService.helloServiceGetOne(serviceInput);
+            serviceResponseList = helloService.helloServiceGetByName(serviceInput);
         }
 
         List<HelloResponse> helloResponseList = serviceResponseList.stream()
@@ -60,7 +60,8 @@ public class HelloController implements KithugsApi {
     }
 
     @Override
-    public ResponseEntity<HelloResponse> v1HelloPost(String name) {
+    public ResponseEntity<HelloResponse> v1HelloPost(HelloRequest request) {
+        var name = request.getName();
         logger.debug("Enter POST hello with name: {}", name);
 
         // Validate the request
