@@ -7,6 +7,6 @@ import java.util.List;
 public interface HelloDao {
     void insert(HelloEntity helloEntity);
     List<HelloEntity> findAll();
-    List<HelloEntity> findOne(HelloEntity helloEntity);
+    List<HelloEntity> findByName(String name);
 
 }

@@ -39,9 +39,9 @@ public class HelloDaoImpl implements HelloDao {
     }
 
     @Override
-    public List<HelloEntity> findOne(HelloEntity helloEntity) {
+    public List<HelloEntity> findByName(String name) {
         var sql = "select * from hello_table where name=:name";
-        var parameterMap = Map.of("name", helloEntity.name());
+        var parameterMap = Map.of("name", name);
 
         var results = template.query(sql, parameterMap, new DataClassRowMapper<>(HelloEntity.class));
 
