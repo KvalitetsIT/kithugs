@@ -8,6 +8,10 @@ import org.openapitools.client.api.KithugsApi;
 import org.openapitools.client.model.DetailedError;
 
 import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.Locale;
+
+import org.junit.jupiter.api.BeforeAll;
 import org.openapitools.client.model.HelloRequest;
 
 class HelloIT extends AbstractIntegrationTest {
@@ -19,6 +23,14 @@ class HelloIT extends AbstractIntegrationTest {
         apiClient.setBasePath(getApiBasePath());
 
         helloApi = new KithugsApi(apiClient);
+    }
+
+    @BeforeAll
+    public static void setUpLocale() {
+        //On certain computers the language for Spring error messages defaults to Danish.
+        //This would cause certain tests where we compare error messages to strings to fail.
+        //This forces the language of error messages to English, preventing any issues.  
+        Locale.setDefault(Locale.ENGLISH);
     }
 
     @Test
@@ -119,7 +131,7 @@ class HelloIT extends AbstractIntegrationTest {
         DetailedError detailedError = JSON.deserialize(thrownException.getResponseBody(), DetailedError.class);
         assertEquals("Bad Request", detailedError.getError());
         assertEquals("/v1/hello", detailedError.getPath());
-        assertEquals("v1HelloGet.name: størrelse skal være mellem 0 og 10", detailedError.getDetailedError());
+        assertEquals("v1HelloGet.name: size must be between 0 and 10", detailedError.getDetailedError());
         assertEquals(DetailedError.DetailedErrorCodeEnum._10, detailedError.getDetailedErrorCode());
         assertNotNull(detailedError.getTimestamp());
         assertEquals(400, detailedError.getStatus().longValue());
@@ -133,7 +145,7 @@ class HelloIT extends AbstractIntegrationTest {
         DetailedError detailedError = JSON.deserialize(thrownException.getResponseBody(), DetailedError.class);
         assertEquals("Bad Request", detailedError.getError());
         assertEquals("/v1/hello", detailedError.getPath());
-        assertEquals("name: størrelse skal være mellem 0 og 10", detailedError.getDetailedError());
+        assertEquals("name: size must be between 0 and 10", detailedError.getDetailedError());
         assertEquals(DetailedError.DetailedErrorCodeEnum._10, detailedError.getDetailedErrorCode());
         assertNotNull(detailedError.getTimestamp());
         assertEquals(400, detailedError.getStatus().longValue());
