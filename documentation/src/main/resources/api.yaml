@@ -40,7 +40,7 @@ paths:
             maxLength: 10
           example: 'John Doe'
       summary: Get name.
-      description: Post a name and get all instances of the name in the db. Post without a name to get everything that's in the db.
+      description: Get all instances of the name in the db. If no name is specified, get everything that's in the db.
       responses:
         '200':
           description: Ok

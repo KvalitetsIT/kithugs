@@ -59,7 +59,7 @@ public class HelloControllerTest {
         var expectedDate = ZonedDateTime.now();
         List<HelloServiceOutput> mockServiceResponseList = new ArrayList<>();
         mockServiceResponseList.add(new HelloServiceOutput(name, expectedDate));
-        Mockito.when(helloService.helloServiceGetAll()).thenReturn(mockServiceResponseList);
+        Mockito.when(helloService.helloServiceGetByName(Mockito.any(HelloServiceInput.class))).thenReturn(mockServiceResponseList);
 
         //Act
         var result = helloController.v1HelloGet(null);
@@ -70,7 +70,7 @@ public class HelloControllerTest {
         assertEquals(name, result.getBody().get(0).getName());
         assertEquals(expectedDate.toOffsetDateTime(), result.getBody().get(0).getNow());
 
-        Mockito.verify(helloService, times(1)).helloServiceGetAll();
+        Mockito.verify(helloService, times(1)).helloServiceGetByName(Mockito.any(HelloServiceInput.class));
     }
 
     @Test

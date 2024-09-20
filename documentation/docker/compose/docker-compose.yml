@@ -15,7 +15,7 @@ services:
    helloservice:
      image: kvalitetsit/kithugs:latest
      environment:
-      - jdbc_url=jdbc:mysql://mariadb:3306/hellodb #used to be "jdbc_url=jdbc:mariadb://mariadb:3306/hellodb", was changed to fix crashes on startup
+      - jdbc_url=jdbc:mariadb://mariadb:3306/hellodb
       - jdbc_user=hellouser
       - jdbc_pass=secret1234
       - usercontext_header_name=X-Test-Auth

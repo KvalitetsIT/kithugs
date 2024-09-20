@@ -13,7 +13,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
@@ -34,19 +33,14 @@ public class HelloController implements KithugsApi {
 
         List <HelloServiceOutput> serviceResponseList;
 
-        if (name == null) {
-            serviceResponseList = helloService.helloServiceGetAll();
-
+        // Just for demonstrating error response. Actual validation should most likely be somewhere else.
+        if(name != null && name.equalsIgnoreCase("NOT_VALID")) {
+            throw new BadRequestException(DetailedError.DetailedErrorCodeEnum._10, "%s is not a valid name.".formatted(name));
         }
-        else {
-            // Just for demonstrating error response. Actual validation should most likely be somewhere else.
-            if(name.equalsIgnoreCase("NOT_VALID")) {
-                throw new BadRequestException(DetailedError.DetailedErrorCodeEnum._10, "%s is not a valid name.".formatted(name));
-            }
-            var serviceInput = new HelloServiceInput(name);
+        var serviceInput = new HelloServiceInput(name);
 
-            serviceResponseList = helloService.helloServiceGetByName(serviceInput);
-        }
+        // Gets all entries of the name in the db. If name is null, get entire db contents.
+        serviceResponseList = helloService.helloServiceGetByName(serviceInput);
 
         List<HelloResponse> helloResponseList = serviceResponseList.stream()
             .map(serviceResponse -> {
@@ -66,7 +60,7 @@ public class HelloController implements KithugsApi {
         logger.debug("Enter POST hello with name: {}", name);
 
         // Validate the request
-        if (name == null || name == "") {
+        if (name.equals("")) {
             throw new BadRequestException(DetailedError.DetailedErrorCodeEnum._10, "Name cannot be null or empty.");
         }
 

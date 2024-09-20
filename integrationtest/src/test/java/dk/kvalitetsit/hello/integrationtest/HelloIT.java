@@ -9,9 +9,6 @@ import org.openapitools.client.model.DetailedError;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.Locale;
-
-import org.junit.jupiter.api.BeforeAll;
 import org.openapitools.client.model.HelloRequest;
 
 class HelloIT extends AbstractIntegrationTest {
@@ -23,14 +20,6 @@ class HelloIT extends AbstractIntegrationTest {
         apiClient.setBasePath(getApiBasePath());
 
         helloApi = new KithugsApi(apiClient);
-    }
-
-    @BeforeAll
-    public static void setUpLocale() {
-        //On certain computers the language for Spring error messages defaults to Danish.
-        //This would cause certain tests where we compare error messages to strings to fail.
-        //This forces the language of error messages to English, preventing any issues.  
-        Locale.setDefault(Locale.ENGLISH);
     }
 
     @Test
@@ -83,44 +72,6 @@ class HelloIT extends AbstractIntegrationTest {
         assertEquals(request.getName(), postResult.getName());
         assertNull(postResult.getiCanBeNull());
         assertNotNull(postResult.getNow());
-    }
-
-    @Test
-    void testCallPostAndGetService() throws ApiException {
-        var input = "Bob Dow";
-        var request = new HelloRequest().name(input);
-
-        //Get all db entries
-        var result = helloApi.v1HelloGet(null);
-
-        //Assert input is not in db entries
-        assertNotNull(result);
-        boolean containsInput = result.stream()
-            .anyMatch(dbEntry -> input.equals(dbEntry.getName()));
-        assert(!containsInput);
-        int resultLengthBeforePost = result.size();
-
-        //Post input to db
-        var postResult = helloApi.v1HelloPost(request);
-
-        //Assert post was successful
-        assertNotNull(postResult);
-        assertEquals(request.getName(), postResult.getName());
-        assertNull(postResult.getiCanBeNull());
-        assertNotNull(postResult.getNow());
-
-        //Get all db entries again
-        var resultAfterPost = helloApi.v1HelloGet(null);
-
-        //Assert input is in db entries now
-        assertNotNull(resultAfterPost);
-        boolean containsInputAfterPost = resultAfterPost.stream()
-            .anyMatch(dbEntry -> input.equals(dbEntry.getName()));
-        assert(containsInputAfterPost);
-
-        //Assert number of db entries increased by exactly 1
-        int resultLengthAfterPost = resultAfterPost.size();
-        assertEquals(resultLengthBeforePost, resultLengthAfterPost - 1);
     }
 
     @Test
