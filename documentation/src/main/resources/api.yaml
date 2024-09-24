@@ -33,21 +33,21 @@ paths:
       parameters:
         - name: name
           in: query
-          required: true
+          required: false
           description: Name. If name is "NOT_VALID" an validation error occurs.
           schema:
             type: string
             maxLength: 10
           example: 'John Doe'
-      summary: Call the thugs service
-      description: Post your name and get some hugs or meet some thugs.
+      summary: Get name.
+      description: Get all instances of the name in the db. If no name is specified, get everything that's in the db.
       responses:
         '200':
           description: Ok
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/helloResponse'
+                $ref: '#/components/schemas/helloResponseList'
         '400':
           $ref: '#/components/responses/400'
     post:
@@ -96,7 +96,6 @@ components:
           type: string
           example: "John Doe"
           maxLength: 10
-
     helloResponse:
       type: object
       required:
@@ -114,6 +113,12 @@ components:
         i_can_be_null:
           type: string
           nullable: true
+
+    helloResponseList:
+      type: array
+      description: List of hello responses
+      items:
+        $ref: '#/components/schemas/helloResponse'
 
     detailedError:
       allOf:

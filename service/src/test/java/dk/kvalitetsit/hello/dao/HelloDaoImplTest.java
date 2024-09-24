@@ -14,7 +14,7 @@ public class HelloDaoImplTest extends AbstractDaoTest {
     private HelloDao helloDao;
 
     @Test
-    public void testByMessageId() {
+    public void testFindAll() {
         var input = HelloEntity.createInstance(UUID.randomUUID().toString());
 
         helloDao.insert(input);
@@ -25,4 +25,30 @@ public class HelloDaoImplTest extends AbstractDaoTest {
         assertEquals(input.name(), result.get(0).name());
         assertNotNull(result.get(0).id());
     }
+
+    @Test
+    public void testFindByName() {
+        var name = UUID.randomUUID().toString();
+        var entity = HelloEntity.createInstance(name);
+
+        helloDao.insert(entity);
+
+        var result = helloDao.findByName(name);
+
+        assertNotNull(result);
+        assertEquals(1, result.size());
+        assertEquals(name, result.get(0).name());
+        assertNotNull(result.get(0).id());
+    }
+
+    @Test
+    public void testFindByNameWhenNameDoesNotExist() {
+        var name = UUID.randomUUID().toString();
+
+        var result = helloDao.findByName(name);
+
+        assertNotNull(result);
+        assertEquals(0, result.size());
+    }
+
 }

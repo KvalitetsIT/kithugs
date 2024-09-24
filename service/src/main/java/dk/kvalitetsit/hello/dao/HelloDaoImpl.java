@@ -37,4 +37,14 @@ public class HelloDaoImpl implements HelloDao {
 
         return template.query(sql, new DataClassRowMapper<>(HelloEntity.class));
     }
+
+    @Override
+    public List<HelloEntity> findByName(String name) {
+        var sql = "select * from hello_table where name=:name";
+        var parameterMap = Map.of("name", name);
+
+        var results = template.query(sql, parameterMap, new DataClassRowMapper<>(HelloEntity.class));
+
+        return results;
+    }
 }
