@@ -9,7 +9,7 @@
                         {
                         "logger": "%logger",
                         "level": "%level",
-                        "correlation-id": "%X{correlation-id}",
+                        "mdc": "%mdc",
                         "thread": "%thread",
                         "message": "%m"
                         }

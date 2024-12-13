@@ -21,7 +21,7 @@ if [[ -z $LOG_LEVEL_FRAMEWORK ]]; then
 fi
 
 if [[ -z $CORRELATION_ID ]]; then
-  echo "Default CORRELATION_ID = correlation-id"
+  echo "Default CORRELATION_ID = x-request-id"
   export CORRELATION_ID=x-request-id
 fi
 
