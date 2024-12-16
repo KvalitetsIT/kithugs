@@ -21,7 +21,7 @@ public class ErrorController {
 
     @ExceptionHandler(ValidationException.class)
     public ResponseEntity<DetailedError> handleApiException(ValidationException e, HttpServletRequest request) {
-        logger.debug("Handling ValidationException.");
+        logger.debug("Handling ValidationException.", e);
 
         var error = getDetailedBadRequestErrorMessage(request, e.getMessage());
         return ResponseEntity.badRequest().body(error);
@@ -29,7 +29,7 @@ public class ErrorController {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<DetailedError> meth(MethodArgumentNotValidException e, HttpServletRequest request) {
-        logger.debug("Handling MethodArgumentNotValidException.");
+        logger.debug("Handling MethodArgumentNotValidException.", e);
 
         var error = getDetailedBadRequestErrorMessage(request, validationErrorToString(e));
         return ResponseEntity.badRequest().body(error);
@@ -37,7 +37,7 @@ public class ErrorController {
 
     @ExceptionHandler(AbstractApiException.class)
     public ResponseEntity<DetailedError> handleApiException(AbstractApiException e, HttpServletRequest request) {
-        logger.debug("Handling ApiException: {}", e.getHttpStatus());
+        logger.debug("Handling ApiException: {}", e.getHttpStatus(), e);
         var error = new DetailedError()
                 .path(request.getRequestURI())
                 .timestamp(OffsetDateTime.now())
