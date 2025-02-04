@@ -74,3 +74,5 @@ from [dependabot-auto-merge.yml](.github/workflows/dependabot-auto-merge.yml). B
 | LOG_LEVEL            | Log Level for applikation  log. Defaults to INFO.                                                    | No       |
 | LOG_LEVEL_FRAMEWORK  | Log level for framework. Defaults to INFO.                                                           | No       |
 | CORRELATION_ID       | HTTP header to take correlation id from. Used to correlate log messages. Defaults to "x-request-id". | No       |
+
+The database connection pool is set up using HikariCP, and uses its default settings that are documented at https://github.com/brettwooldridge/HikariCP?tab=readme-ov-file#frequently-used. 
