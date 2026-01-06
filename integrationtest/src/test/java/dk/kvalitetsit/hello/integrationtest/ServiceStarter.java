@@ -49,7 +49,7 @@ public class ServiceStarter {
         // Start service
         service = new GenericContainer<>("local/kithugs-qa:dev")
                 .withFileSystemBind("/tmp", "/jacoco-output")
-                .withEnv("JVM_OPTS", "-javaagent:/jacoco/jacocoagent.jar=output=file,destfile=/jacoco-output/jacoco-it.exec,dumponexit=true -cp integrationtest.jar");
+                .withEnv("JVM_OPTS", "-javaagent:/jacoco/jacocoagent.jar=output=file,destfile=/jacoco-output/jacoco-it.exec,dumponexit=true");
 
         service.withNetwork(dockerNetwork)
                 .withNetworkAliases("kithugs")
