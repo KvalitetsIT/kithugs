@@ -14,7 +14,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.5.7</version>
+		<version>3.5.11</version>
 	</parent>
 	<groupId>dk.kvalitetsit.kithugs</groupId>
 	<artifactId>kithugs</artifactId>
@@ -23,7 +23,7 @@
 	<description>KITHUGS service</description>
 
 	<properties>
-		<java.version>21</java.version>
+		<java.version>25</java.version>
 		<testcontainers.version>1.21.4</testcontainers.version>
 		<spring-prometheus-app-info-version>2.0.3</spring-prometheus-app-info-version>
 		<spring-request-id-logger-version>2.0.1</spring-request-id-logger-version>
