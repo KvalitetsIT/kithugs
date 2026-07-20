@@ -9,7 +9,7 @@ jobs:
 
     steps:
 # Checkout source code
-    - uses: actions/checkout@v6.0.3
+    - uses: actions/checkout@v7.0.0
 
 # Cache maven stuff
     - name: Cache local Maven repository
