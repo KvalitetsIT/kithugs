@@ -1,5 +1,5 @@
-![Build Status](https://github.com/KvalitetsIT/kithugs/workflows/CICD/badge.svg)
-# kithugs
+![Build Status](https://github.com/KvalitetsIT/medcom-sdn-core/workflows/CICD/badge.svg)
+# medcom-sdn-core
 
 Template repository showing how to be a good Java Spring Boot citizen in a k8s cluster.
 
@@ -57,7 +57,7 @@ In the docker-compose setup is also an example on how to set custom endpoints fo
 Out of the box we use GitHub Actions as our CI/CD platform and that can also handle dependency updates. We utilize 
 GitHubs [Dependabot](https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuring-dependabot-version-updates) 
 to create PR's with dependency updates. Further we have a job that automatically approves and merges dependencies. By 
-default, it is only enabled in the template repository. You can enable this by removing ` && github.repository == 'KvalitetsIT/kithugs'`
+default, it is only enabled in the template repository. You can enable this by removing ` && github.repository == 'KvalitetsIT/medcom-sdn-core'`
 from [dependabot-auto-merge.yml](.github/workflows/dependabot-auto-merge.yml). Before enabling it please consider below. 
 
 - If no branch protection rule is configured dependency udpates that fails the automatic build and test will get merged. 

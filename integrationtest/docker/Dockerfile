@@ -1,4 +1,4 @@
-FROM kvalitetsit/kithugs:dev
+FROM kvalitetsit/medcom-sdn-core:dev
 
 COPY /maven/integrationtest.jar /app/lib/integrationtest.jar
 COPY /maven/org.jacoco.agent-*.jar /jacoco/jacoco-agent.jar

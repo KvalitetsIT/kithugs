@@ -3,8 +3,8 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<artifactId>kithugs</artifactId>
-		<groupId>dk.kvalitetsit.kithugs</groupId>
+		<artifactId>medcom-sdn-core</artifactId>
+		<groupId>dk.kvalitetsit.medcom-sdn-core</groupId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<artifactId>documentation</artifactId>
@@ -93,7 +93,7 @@
 				<configuration>
 					<images>
 						<image>
-							<name>kvalitetsit/kithugs-documentation</name>
+							<name>kvalitetsit/medcom-sdn-core-documentation</name>
 							<build>
 								<tags>
 									<tag>dev</tag>
