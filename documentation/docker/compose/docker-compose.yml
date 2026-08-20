@@ -13,7 +13,7 @@ services:
       timeout: 2s
       retries: 10
    helloservice:
-     image: kvalitetsit/medcom-sdn-core:latest
+     image: kvalitetsit/kithugs:latest
      environment:
       - jdbc_url=jdbc:mariadb://mariadb:3306/hellodb
       - jdbc_user=hellouser
@@ -33,7 +33,7 @@ services:
      ports: 
       - 8080:8080
    documenatation-and-test:
-     image: kvalitetsit/medcom-sdn-core-documentation:latest
+     image: kvalitetsit/kithugs-documentation:latest
      environment:
       - BASE_URL=/test
       - 'SERVER_URLS=[{"url": "http://localhost:8080", "name": "HelloService"}]'
