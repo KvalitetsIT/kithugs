@@ -2,8 +2,8 @@
 
 export DOC_FILES=/usr/share/nginx/html/*.yaml
 
-echo "Running set version"
-/kit/setVersion.sh
+echo "Running set definitions"
+/kit/setDefinitions.sh
 echo "Running set servers"
 /kit/setServers.sh
 
