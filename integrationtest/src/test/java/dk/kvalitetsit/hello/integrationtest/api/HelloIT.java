@@ -1,48 +1,40 @@
-package dk.kvalitetsit.hello.integrationtest;
+package dk.kvalitetsit.hello.integrationtest.api;
 
+import dk.kvalitetsit.hello.dao.HelloDao;
+import dk.kvalitetsit.hello.dao.HelloDaoImpl;
+import dk.kvalitetsit.hello.dao.entity.HelloEntity;
+import dk.kvalitetsit.hello.integrationtest.BaseTest;
 import org.junit.jupiter.api.Test;
-import org.openapitools.client.ApiClient;
 import org.openapitools.client.ApiException;
 import org.openapitools.client.JSON;
 import org.openapitools.client.api.KithugsApi;
 import org.openapitools.client.model.DetailedError;
+import org.openapitools.client.model.HelloRequest;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.openapitools.client.model.HelloRequest;
-
-class HelloIT extends AbstractIntegrationTest {
-
-    private final KithugsApi helloApi;
-
-    HelloIT() {
-        var apiClient = new ApiClient();
-        apiClient.setBasePath(getApiBasePath());
-
-        helloApi = new KithugsApi(apiClient);
-    }
+class HelloIT extends BaseTest {
+    private static final KithugsApi helloApi = new KithugsApi(client);
+    private static final HelloDao helloDao = new HelloDaoImpl(appDatabase.getDatasource());
 
     @Test
     void testCallServiceWithName() throws ApiException {
-        //in V901__extra_data_for_integration_test.sql the name "Some Name" is set to be inserted into the db.
-        //here we test that we can get that name from the db.
-        var input = "Some Name";
+        var entity = new HelloEntity(1L, "Some Name");
+        helloDao.insert(entity);
 
-        var result = helloApi.v1HelloGet(input);
+        var result = helloApi.v1HelloGet(entity.name());
 
         assertNotNull(result);
         assertEquals(1, result.size());
-        boolean containsSomeName = result.stream()
-            .anyMatch(dbEntry -> "Some Name".equals(dbEntry.getName()));
-        assert(containsSomeName);
+        assertEquals(entity.name(), result.getFirst().getName());
     }
 
     @Test
     void testCallServiceWithNameNotInDB() throws ApiException {
-        //Test that calling the get method with a name that is not in the db returns an empty list
-        var input = "notindb";
+        var entity = new HelloEntity(1L, "Some Name");
+        helloDao.insert(entity);
 
-        var result = helloApi.v1HelloGet(input);
+        var result = helloApi.v1HelloGet("Another");
 
         assertNotNull(result);
         assertEquals(0, result.size());
@@ -50,17 +42,15 @@ class HelloIT extends AbstractIntegrationTest {
 
     @Test
     void testCallServiceWithoutName() throws ApiException {
-        //in V901__extra_data_for_integration_test.sql the name "Some Name" is set to be inserted into the db.
-        //here we test that that is the only name we get from the db when we try to get everything from the db
+        var entity = new HelloEntity(1L, "Some Name");
+        helloDao.insert(entity);
         String input = null;
         
         var result = helloApi.v1HelloGet(input);
 
         assertNotNull(result);
         assertEquals(1, result.size());
-        boolean containsSomeName = result.stream()
-            .anyMatch(dbEntry -> "Some Name".equals(dbEntry.getName()));
-        assert(containsSomeName);
+        assertEquals(entity.name(), result.getFirst().getName());
     }
 
     @Test
