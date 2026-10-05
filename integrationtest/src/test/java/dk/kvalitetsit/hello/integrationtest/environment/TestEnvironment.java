@@ -81,9 +81,9 @@ public final class TestEnvironment {
         Properties properties = new Properties();
         String host = dbEnvironment.getServiceHost(DB_SERVICE_NAME, 3306);
         Integer port = dbEnvironment.getServicePort(DB_SERVICE_NAME, 3306);
-        properties.setProperty("JDBC.URL", "jdbc:mariadb://" + host + ":" + port + "/" + DB_NAME);
-        properties.setProperty("JDBC.USER", DB_USER);
-        properties.setProperty("JDBC.PASS", DB_PASSWORD);
+        properties.setProperty("APP.DB.URL", "jdbc:mariadb://" + host + ":" + port + "/" + DB_NAME);
+        properties.setProperty("APP.DB.USERNAME", DB_USER);
+        properties.setProperty("APP.DB.PASSWORD", DB_PASSWORD);
         return properties;
     }
 
