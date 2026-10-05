@@ -1,17 +1,18 @@
-package dk.kvalitetsit.hello.dao;
+package dk.kvalitetsit.hello.integrationtest.dao;
 
+import dk.kvalitetsit.hello.dao.HelloDao;
+import dk.kvalitetsit.hello.dao.HelloDaoImpl;
 import dk.kvalitetsit.hello.dao.entity.HelloEntity;
+import dk.kvalitetsit.hello.integrationtest.BaseTest;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-public class HelloDaoImplTest extends AbstractDaoTest {
-    @Autowired
-    private HelloDao helloDao;
+public class HelloDaoIT extends BaseTest {
+    private static final HelloDao helloDao = new HelloDaoImpl(appDatabase.getDatasource());
 
     @Test
     public void testFindAll() {
@@ -50,5 +51,4 @@ public class HelloDaoImplTest extends AbstractDaoTest {
         assertNotNull(result);
         assertEquals(0, result.size());
     }
-
 }
