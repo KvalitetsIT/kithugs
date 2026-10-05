@@ -1,0 +1,11 @@
+# This won't run as a standalone docker-compose as the service is intentionally missing 'depends_on'.
+# Moreover this docker-compose is only intended for the integration testing.
+services:
+  helloservice:
+    image: kvalitetsit/kithugs:latest
+    environment:
+      - jdbc_url=jdbc:mariadb://host.docker.internal:3306/hellodb
+      - jdbc_user=hellouser
+      - jdbc_pass=secret1234
+    extra_hosts:
+      - "host.docker.internal:host-gateway"

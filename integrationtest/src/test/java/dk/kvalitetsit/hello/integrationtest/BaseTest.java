@@ -16,13 +16,15 @@ import java.util.TimeZone;
 public abstract class BaseTest {
     private static final Logger logger = LoggerFactory.getLogger(BaseTest.class);
 
+    private static final String APP_COMPOSE_FILE = "docker-compose.app.yaml";
     private static final String APP_SERVICE_NAME = "helloservice";
+    private static final String DB_COMPOSE_FILE = "docker-compose.db.yaml";
     private static final String DB_SERVICE_NAME = "mariadb";
     private static final String DB_NAME = "hellodb";
     private static final String DB_USER = "root";
     private static final String DB_PASSWORD = "rootroot";
 
-    protected static final ComposeContainer dbEnvironment = new ComposeContainer(getComposeFile())
+    protected static final ComposeContainer dbEnvironment = new ComposeContainer(getComposeFile(DB_COMPOSE_FILE))
             .withServices(DB_SERVICE_NAME)
             .withExposedService(DB_SERVICE_NAME, 3306, Wait.forHealthcheck())
             .withLogConsumer(DB_SERVICE_NAME, new Slf4jLogConsumer(logger).withPrefix(DB_SERVICE_NAME));
@@ -38,7 +40,7 @@ public abstract class BaseTest {
         appDatabase = getDatabase();
 
         boolean runInDocker = Boolean.getBoolean("runInDocker");
-        component = runInDocker ? new InDockerComponent(getComposeFile(), APP_SERVICE_NAME, logger) : new OutsideDockerComponent(getProperties());
+        component = runInDocker ? new InDockerComponent(getComposeFile(APP_COMPOSE_FILE), APP_SERVICE_NAME, logger) : new OutsideDockerComponent(getProperties());
         client = new ApiClient();
         startService();
     }
@@ -53,10 +55,10 @@ public abstract class BaseTest {
         client.setBasePath(String.format("http://%s:%s", component.getHost(), component.getPort()));
     }
 
-    public static File getComposeFile() {
+    private static File getComposeFile(String fileName) {
         var testWorkingDir = System.getProperty("user.dir");
         var projectRoot = Paths.get(testWorkingDir).toAbsolutePath().normalize().getParent().toFile();
-        return new File(projectRoot, "compose/docker-compose.yaml");
+        return new File(projectRoot, "compose/" + fileName);
     }
 
     private static Database getDatabase() {
