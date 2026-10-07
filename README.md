@@ -48,7 +48,9 @@ Health URL that can be used for readiness probe: `http://localhost:8081/actuator
 Documentation of the API is build as a separate Docker image. Documentation is build using Swagger. The documentation 
 image is post-fixed with `-documentation`. The file `documentation/docker/compose/docker-compose.yml` contains a  setup 
 that starts both the service and documentation image. The documentation can be accessed at `http://localhost/test` 
-and the service can be called through the Swagger UI. 
+and the service can be called through the Swagger UI.
+
+A definition will be displayed for each openapi definition file `documentation/src/main/resources/api*.yaml`
 
 In the docker-compose setup is also an example on how to set custom endpoints for the Swagger documentation service.
 
