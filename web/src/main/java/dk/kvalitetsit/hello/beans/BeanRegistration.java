@@ -3,6 +3,10 @@ package dk.kvalitetsit.hello.beans;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import dk.kvalitetsit.hello.configuration.ServiceConfiguration;
+import dk.kvalitetsit.hello.dao.HelloDao;
+import dk.kvalitetsit.hello.dao.HelloDaoImpl;
+import dk.kvalitetsit.hello.service.HelloService;
+import dk.kvalitetsit.hello.service.HelloServiceImpl;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,6 +22,16 @@ public class BeanRegistration {
 
     public BeanRegistration(ServiceConfiguration configuration) {
         this.configuration = configuration;
+    }
+
+    @Bean
+    public HelloService helloService(HelloDao helloDao) {
+        return new HelloServiceImpl(helloDao);
+    }
+
+    @Bean
+    public HelloDao helloDao(DataSource dataSource) {
+        return new HelloDaoImpl(dataSource);
     }
 
     @Bean
