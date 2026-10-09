@@ -3,7 +3,8 @@ package dk.kvalitetsit.hello.integrationtest.dao;
 import dk.kvalitetsit.hello.dao.HelloDao;
 import dk.kvalitetsit.hello.dao.HelloDaoImpl;
 import dk.kvalitetsit.hello.dao.entity.HelloEntity;
-import dk.kvalitetsit.hello.integrationtest.BaseTest;
+import dk.kvalitetsit.hello.integrationtest.environment.BaseTest;
+import dk.kvalitetsit.hello.integrationtest.environment.TestEnvironment;
 import org.junit.jupiter.api.Test;
 
 import java.util.UUID;
@@ -12,7 +13,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class HelloDaoIT extends BaseTest {
-    private static final HelloDao helloDao = new HelloDaoImpl(appDatabase.getDatasource());
+    private final TestEnvironment testEnvironment = getEnvironment();
+    private final HelloDao helloDao = new HelloDaoImpl(testEnvironment.getDatabase().getDatasource());
 
     @Test
     public void testFindAll() {

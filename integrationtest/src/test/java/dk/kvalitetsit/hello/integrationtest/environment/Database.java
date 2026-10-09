@@ -1,4 +1,4 @@
-package dk.kvalitetsit.hello.integrationtest;
+package dk.kvalitetsit.hello.integrationtest.environment;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;

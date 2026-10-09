@@ -1,6 +1,5 @@
-package dk.kvalitetsit.hello.integrationtest;
+package dk.kvalitetsit.hello.integrationtest.environment;
 
-import org.junit.jupiter.api.AfterEach;
 import org.openapitools.client.ApiClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,8 +12,13 @@ import java.nio.file.Paths;
 import java.util.Properties;
 import java.util.TimeZone;
 
-public abstract class BaseTest {
-    private static final Logger logger = LoggerFactory.getLogger(BaseTest.class);
+
+/**
+ * TestEnvironment is a singleton class that sets up the test environment for integration tests.
+ * It starts the database and application services using Docker Compose, and provides access to the database and API client.
+ */
+public final class TestEnvironment {
+    private static final Logger logger = LoggerFactory.getLogger(TestEnvironment.class);
 
     private static final String APP_COMPOSE_FILE = "docker-compose.app.yaml";
     private static final String APP_SERVICE_NAME = "helloservice";
@@ -24,20 +28,20 @@ public abstract class BaseTest {
     private static final String DB_USER = "root";
     private static final String DB_PASSWORD = "rootroot";
 
-    protected static final ComposeContainer dbEnvironment = new ComposeContainer(getComposeFile(DB_COMPOSE_FILE))
+    private static final ComposeContainer dbEnvironment = new ComposeContainer(getComposeFile(DB_COMPOSE_FILE))
             .withServices(DB_SERVICE_NAME)
             .withExposedService(DB_SERVICE_NAME, 3306, Wait.forHealthcheck())
             .withLogConsumer(DB_SERVICE_NAME, new Slf4jLogConsumer(logger).withPrefix(DB_SERVICE_NAME));
-    protected static Database appDatabase;
+    private static final Database database;
 
-    protected static TestService testService;
-    protected static ApiClient client;
+    private static final TestService testService;
+    private static final ApiClient client;
 
     static {
         TimeZone.setDefault(TimeZone.getTimeZone("Europe/Copenhagen")); // Same as timezone used in docker containers
 
         dbEnvironment.start();
-        appDatabase = getDatabase();
+        database = createDatabase();
 
         boolean runInDocker = Boolean.getBoolean("runInDocker");
         testService = runInDocker ? new InDockerTestService(getComposeFile(APP_COMPOSE_FILE), APP_SERVICE_NAME, logger) : new OutsideDockerTestService(getProperties());
@@ -45,9 +49,15 @@ public abstract class BaseTest {
         startService();
     }
 
-    @AfterEach
-    void afterEach() {
-        appDatabase.clear();
+    TestEnvironment() {
+    }
+
+    public Database getDatabase() {
+        return database;
+    }
+
+    public ApiClient getClient() {
+        return client;
     }
 
     private static void startService() {
@@ -61,7 +71,7 @@ public abstract class BaseTest {
         return new File(projectRoot, "compose/" + fileName);
     }
 
-    private static Database getDatabase() {
+    private static Database createDatabase() {
         var host = dbEnvironment.getServiceHost(DB_SERVICE_NAME, 3306);
         var port = dbEnvironment.getServicePort(DB_SERVICE_NAME, 3306);
         return new Database(host, port, DB_NAME, DB_USER, DB_PASSWORD);

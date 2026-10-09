@@ -3,7 +3,8 @@ package dk.kvalitetsit.hello.integrationtest.api;
 import dk.kvalitetsit.hello.dao.HelloDao;
 import dk.kvalitetsit.hello.dao.HelloDaoImpl;
 import dk.kvalitetsit.hello.dao.entity.HelloEntity;
-import dk.kvalitetsit.hello.integrationtest.BaseTest;
+import dk.kvalitetsit.hello.integrationtest.environment.BaseTest;
+import dk.kvalitetsit.hello.integrationtest.environment.TestEnvironment;
 import org.junit.jupiter.api.Test;
 import org.openapitools.client.ApiException;
 import org.openapitools.client.JSON;
@@ -14,8 +15,9 @@ import org.openapitools.client.model.HelloRequest;
 import static org.junit.jupiter.api.Assertions.*;
 
 class HelloIT extends BaseTest {
-    private static final KithugsApi helloApi = new KithugsApi(client);
-    private static final HelloDao helloDao = new HelloDaoImpl(appDatabase.getDatasource());
+    private final TestEnvironment testEnvironment = getEnvironment();
+    private final KithugsApi helloApi = new KithugsApi(testEnvironment.getClient());
+    private final HelloDao helloDao = new HelloDaoImpl(testEnvironment.getDatabase().getDatasource());
 
     @Test
     void testCallServiceWithName() throws ApiException {

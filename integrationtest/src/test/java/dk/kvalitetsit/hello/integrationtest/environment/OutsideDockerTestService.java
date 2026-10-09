@@ -1,4 +1,4 @@
-package dk.kvalitetsit.hello.integrationtest;
+package dk.kvalitetsit.hello.integrationtest.environment;
 
 import dk.kvalitetsit.hello.Application;
 import org.springframework.boot.SpringApplication;

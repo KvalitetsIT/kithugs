@@ -1,4 +1,4 @@
-package dk.kvalitetsit.hello.integrationtest;
+package dk.kvalitetsit.hello.integrationtest.environment;
 
 import org.slf4j.Logger;
 import org.testcontainers.containers.ComposeContainer;
