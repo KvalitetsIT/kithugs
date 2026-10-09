@@ -70,24 +70,6 @@
 	<build>
 		<plugins>
 			<plugin>
-				<artifactId>exec-maven-plugin</artifactId>
-				<groupId>org.codehaus.mojo</groupId>
-				<version>3.6.3</version>
-				<executions>
-					<execution>
-						<id>Get old doc versions</id>
-						<phase>compile</phase>
-						<goals>
-							<goal>exec</goal>
-						</goals>
-						<configuration>
-							<executable>docker/getOldDoc.sh</executable>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-
-			<plugin>
 				<groupId>io.fabric8</groupId>
 				<artifactId>docker-maven-plugin</artifactId>
 				<configuration>
@@ -106,11 +88,7 @@
 										<files>
 											<file>
 												<source>${project.basedir}/src/main/resources/api.yaml</source>
-												<destName>${git.commit.id.describe}.yaml</destName>
-											</file>
-											<file>
-												<source>${project.build.outputDirectory}/git.properties</source>
-												<destName>runningVersion.json</destName>
+												<destName>api.yaml</destName>
 											</file>
 										</files>
 										<fileSets>
