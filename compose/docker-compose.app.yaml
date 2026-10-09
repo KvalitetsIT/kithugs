@@ -4,8 +4,8 @@ services:
   helloservice:
     image: kvalitetsit/kithugs:latest
     environment:
-      - jdbc_url=jdbc:mariadb://host.docker.internal:3306/hellodb
-      - jdbc_user=hellouser
-      - jdbc_pass=secret1234
+      - APP_DB_URL=jdbc:mariadb://host.docker.internal:3306/hellodb
+      - APP_DB_USERNAME=hellouser
+      - APP_DB_PASSWORD=secret1234
     extra_hosts:
       - "host.docker.internal:host-gateway"
