@@ -1,0 +1,17 @@
+# This docker-compose only runs the required databases and is isolated from the application in order to achieve data injection during testing
+services:
+  mariadb:
+    image: mariadb:10.11
+    environment:
+      - MYSQL_ROOT_PASSWORD=rootroot
+      - MYSQL_DATABASE=hellodb
+      - MYSQL_USER=hellouser
+      - MYSQL_PASSWORD=secret1234
+      - TZ=Europe/Copenhagen
+    healthcheck:
+      test: mysql --user=root --password=rootroot -e 'show databases;'
+      interval: 2s
+      timeout: 2s
+      retries: 10
+    ports:
+      - 3306:3306

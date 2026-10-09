@@ -1,0 +1,24 @@
+# This docker-compose can be used to run the whole environment
+include:
+  - docker-compose.db.yaml
+services:
+  helloservice:
+    extends:
+      file: docker-compose.app.yaml
+      service: helloservice
+    environment:
+      - JVM_OPTS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005
+    ports:
+      - 8080:8080
+      - 5005:5005
+    depends_on:
+      mariadb:
+        condition: service_healthy
+
+  documentation-and-test:
+    image: kvalitetsit/kithugs-documentation:latest
+    environment:
+      - BASE_URL=/test
+      - 'SERVER_URLS=[{"url": "http://localhost:8080", "name": "HelloService"}]'
+    ports:
+      - 80:8080
