@@ -30,7 +30,7 @@ public abstract class BaseTest {
             .withLogConsumer(DB_SERVICE_NAME, new Slf4jLogConsumer(logger).withPrefix(DB_SERVICE_NAME));
     protected static Database appDatabase;
 
-    protected static Component component;
+    protected static TestService testService;
     protected static ApiClient client;
 
     static {
@@ -40,7 +40,7 @@ public abstract class BaseTest {
         appDatabase = getDatabase();
 
         boolean runInDocker = Boolean.getBoolean("runInDocker");
-        component = runInDocker ? new InDockerComponent(getComposeFile(APP_COMPOSE_FILE), APP_SERVICE_NAME, logger) : new OutsideDockerComponent(getProperties());
+        testService = runInDocker ? new InDockerTestService(getComposeFile(APP_COMPOSE_FILE), APP_SERVICE_NAME, logger) : new OutsideDockerTestService(getProperties());
         client = new ApiClient();
         startService();
     }
@@ -51,8 +51,8 @@ public abstract class BaseTest {
     }
 
     private static void startService() {
-        component.start();
-        client.setBasePath(String.format("http://%s:%s", component.getHost(), component.getPort()));
+        testService.start();
+        client.setBasePath(String.format("http://%s:%s", testService.getHost(), testService.getPort()));
     }
 
     private static File getComposeFile(String fileName) {

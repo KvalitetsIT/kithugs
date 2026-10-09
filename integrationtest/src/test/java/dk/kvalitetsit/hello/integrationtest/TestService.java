@@ -1,6 +1,6 @@
 package dk.kvalitetsit.hello.integrationtest;
 
-public sealed interface Component permits OutsideDockerComponent, InDockerComponent {
+public sealed interface TestService permits OutsideDockerTestService, InDockerTestService {
     void start();
 
     void stop();

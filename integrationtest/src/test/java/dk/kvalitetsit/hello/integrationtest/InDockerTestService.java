@@ -9,14 +9,14 @@ import org.testcontainers.containers.wait.strategy.WaitStrategy;
 import java.io.File;
 import java.time.Duration;
 
-final class InDockerComponent implements Component {
+final class InDockerTestService implements TestService {
     private final String serviceName;
     private final WaitStrategy waitStrategy;
     private final File composeFile;
     private final Slf4jLogConsumer logConsumer;
-    private ComposeContainer component;
+    private ComposeContainer container;
 
-    public InDockerComponent(File composeFile, String serviceName, Logger logger) {
+    public InDockerTestService(File composeFile, String serviceName, Logger logger) {
         this.serviceName = serviceName;
         logConsumer = new Slf4jLogConsumer(logger).withPrefix(serviceName);
         this.composeFile = composeFile;
@@ -25,8 +25,8 @@ final class InDockerComponent implements Component {
 
     @Override
     public void start() {
-        component = createComposeContainer();
-        component.start();
+        container = createComposeContainer();
+        container.start();
     }
 
     private ComposeContainer createComposeContainer() {
@@ -38,16 +38,16 @@ final class InDockerComponent implements Component {
 
     @Override
     public void stop() {
-        component.stop();
+        container.stop();
     }
 
     @Override
     public String getHost() {
-        return component.getServiceHost(serviceName, 8080);
+        return container.getServiceHost(serviceName, 8080);
     }
 
     @Override
     public Integer getPort() {
-        return component.getServicePort(serviceName, 8080);
+        return container.getServicePort(serviceName, 8080);
     }
 }

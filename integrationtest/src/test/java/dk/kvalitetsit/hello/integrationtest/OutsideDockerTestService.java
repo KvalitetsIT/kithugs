@@ -7,11 +7,11 @@ import org.springframework.context.ConfigurableApplicationContext;
 import java.util.Properties;
 
 
-final class OutsideDockerComponent implements Component {
+final class OutsideDockerTestService implements TestService {
     private final Properties properties;
     private ConfigurableApplicationContext app;
 
-    public OutsideDockerComponent(Properties properties) {
+    public OutsideDockerTestService(Properties properties) {
         this.properties = properties;
     }
 
